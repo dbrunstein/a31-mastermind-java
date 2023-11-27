@@ -14,18 +14,34 @@ package MasterMind{
         }
     }
     package Model {
-        class MasterMind{
+        class MasterMindGame{
 
         }
         interface Observer{
         }
+        class Round{
+        }
+        class Game{
+        }
+
+
     }
     package View {
-        class MainWindow {
+        class GameWindow {
 
+        }
+        class StartWindow{
+        }
+        class EndGameWindow{
         }
     }
 }
-MainWindow ...|> Observer
+GameWindow ...|> Observer
+StartWindow ...|> Observer
+EndGameWindow ...|> Observer
+
+Game *---> Round : est un ensemble de
+
+MasterMindGame o--> Observer : < observe
 
 @enduml
