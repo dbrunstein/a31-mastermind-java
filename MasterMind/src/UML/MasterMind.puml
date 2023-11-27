@@ -7,43 +7,48 @@ hide enum methods
 hide interface attributes
 
 package MasterMind{
-    package Controller{
-        class MasterController{
-        }
+    class MasterMindApp{
     }
-    package Model {
-        class MasterMindGame{
+        package Controller{
+            class MasterController{
+            }
         }
-        class Pawn{
+        package Model {
+            class MasterMindGame{
+            }
+            class Pawn{
+            }
+            enum Color{
+            }
+            class Hint{
+            }
+            class HintsLine{
+            }
+            interface Observer{
+            }
+            class Round{
+            }
+            class Game{
+            }
+            class Combination{
+            }
         }
-        enum Color{
+        package View {
+            class GameWindow {
+            }
+            class StartWindow{
+            }
+            class EndGameWindow{
+            }
         }
-        class Hint{
-        }
-        class HintsLine{
-        }
-        interface Observer{
-        }
-        class Round{
-        }
-        class Game{
-        }
-        class Combination{
-        }
-    }
-    package View {
-        class GameWindow {
-        }
-        class StartWindow{
-        }
-        class EndGameWindow{
-        }
-    }
 }
+
 'Base pas ouf mais c'est un début'
+'####VUES####'
 GameWindow ...|> Observer
 StartWindow ...|> Observer
 EndGameWindow ...|> Observer
+'####MODEL####'
 HintsLine *---> Hint : > possède
 Combination *---> Pawn : > possède
 Pawn *---> Color : > possède
@@ -51,5 +56,10 @@ Game *---> Round : > est un ensemble de
 Hint *--> Pawn : > Connait
 HintsLine *---> Combination : < possède
 MasterMindGame o--> Observer : < observe
-
+Round *---> Combination : > possède (secret)
+MasterMindGame o---> Game : > possède
+'####CONTROLLER####'
+MasterController ...> MasterMindGame : > manipule
+'####MAIN####'
+MasterMindApp ...> MasterMindGame : <<uses>>
 @enduml
