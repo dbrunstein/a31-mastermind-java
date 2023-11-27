@@ -32,6 +32,10 @@ package MasterMind{
             }
             class Combination{
             }
+            class Player{
+            }
+            class Settings{
+            }
         }
         package View {
             class GameWindow {
@@ -58,8 +62,12 @@ HintsLine *---> Combination : < possède
 MasterMindGame o--> Observer : < observe
 Round *---> Combination : > possède (secret)
 MasterMindGame o---> Game : > possède
+Settings *--> Player : < décide
+Game ...> Settings : <<uses>>
+Player ..> Game : > joue
 '####CONTROLLER####'
 MasterController ...> MasterMindGame : > manipule
+MasterController ...> Player : > manipule
 '####MAIN####'
 MasterMindApp ...> MasterMindGame : <<uses>>
 @enduml

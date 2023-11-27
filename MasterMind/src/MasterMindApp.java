@@ -1,5 +1,8 @@
+import Model.MasterMindGame;
+
 public class MasterMindApp {
     public static void main(String[] args) {
-        System.out.println("Hello world!");
+        MasterMindGame game = new MasterMindGame();
+
     }
 }
