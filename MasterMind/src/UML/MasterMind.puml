@@ -1,0 +1,28 @@
+@startuml
+'https://plantuml.com/class-diagram
+skinparam style strictuml
+skinparam classAttributeIconSize 0
+skinparam classFontStyle Bold
+hide enum methods
+hide interface attributes
+
+package MasterMind{
+
+    package Controller{
+        class MasterController{
+
+        }
+    }
+    package Model {
+        class MasterMind{
+
+        }
+
+    }
+    package View {
+
+    }
+}
+
+
+@enduml
