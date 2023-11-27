@@ -21,11 +21,11 @@ package MasterMind{
         }
     }
     package View {
-        class MainWindow Implements Observer{
+        class MainWindow {
 
         }
     }
 }
-
+MainWindow ...|> Observer
 
 @enduml
