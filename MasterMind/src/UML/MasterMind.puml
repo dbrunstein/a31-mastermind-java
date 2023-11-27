@@ -7,15 +7,20 @@ hide enum methods
 hide interface attributes
 
 package MasterMind{
-
     package Controller{
         class MasterController{
-
         }
     }
     package Model {
         class MasterMindGame{
-
+        }
+        class Pawn{
+        }
+        enum Color{
+        }
+        class Hint{
+        }
+        class HintsLine{
         }
         interface Observer{
         }
@@ -23,12 +28,11 @@ package MasterMind{
         }
         class Game{
         }
-
-
+        class Combination{
+        }
     }
     package View {
         class GameWindow {
-
         }
         class StartWindow{
         }
@@ -36,12 +40,16 @@ package MasterMind{
         }
     }
 }
+'Base pas ouf mais c'est un début'
 GameWindow ...|> Observer
 StartWindow ...|> Observer
 EndGameWindow ...|> Observer
-
-Game *---> Round : est un ensemble de
-
+HintsLine *---> Hint : > possède
+Combination *---> Pawn : > possède
+Pawn *---> Color : > possède
+Game *---> Round : > est un ensemble de
+Hint *--> Pawn : > Connait
+HintsLine *---> Combination : < possède
 MasterMindGame o--> Observer : < observe
 
 @enduml
