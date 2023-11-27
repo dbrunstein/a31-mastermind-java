@@ -17,10 +17,13 @@ package MasterMind{
         class MasterMind{
 
         }
-
+        interface Observer{
+        }
     }
     package View {
+        class MainWindow Implements Observer{
 
+        }
     }
 }
 
