@@ -1,5 +1,6 @@
 package View;
 
+import Model.MasterUtils;
 import Model.Observer;
 
 import javax.swing.*;
@@ -9,6 +10,7 @@ public class StartWindow extends JFrame implements Observer {
 
     public StartWindow(){
         super("MasterMind 2077");
+        this.setResizable(false);
         setSize(500,500);
         setDefaultCloseOperation(EXIT_ON_CLOSE);
 
@@ -45,7 +47,6 @@ public class StartWindow extends JFrame implements Observer {
         mainPanel.add(imgMenu.getLabel(),BorderLayout.CENTER);
         mainPanel.add(btnPanel,BorderLayout.LINE_START);
         mainPanel.add(sidepanel,BorderLayout.LINE_END);
-
         setContentPane(mainPanel);
         setVisible(true);
     }
