@@ -2,5 +2,7 @@ package View;
 
 import Model.Observer;
 
-public class GameWindow implements Observer {
+import javax.swing.*;
+
+public class GameWindow extends JFrame implements Observer {
 }

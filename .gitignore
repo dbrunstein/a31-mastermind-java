@@ -1,3 +1,5 @@
 # Default ignored files
 .idea
 .xml
+./MasterMind/.idea
+./MasterMind/out
