@@ -82,10 +82,10 @@ public class Board {
     public Boolean wantToPlay(){ // pour le joueur, sera probablement manipulé par le controller plus tard
         Boolean reply = false;
         Scanner myObj = new Scanner(System.in);  // Create a Scanner object
-        System.out.println("Wanna play a game? [Y/N]");
+        System.out.println("Wanna play a game? [y/n]");
 
         String response = myObj.nextLine();  // Read user input
-        if(reply.equals("Y")){
+        if(reply.equals("y")){
             reply = true;
         }
         return reply;

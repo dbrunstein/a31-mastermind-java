@@ -1,0 +1,84 @@
+@startuml
+
+skinparam style strictuml
+skinparam classAttributeIconSize 0
+skinparam classFontStyle Bold
+hide enum methods
+hide interface attributes
+'à mettre à jour pour la question 6
+package trafficlight {
+    class SwitchColorFactory{
+        + <<create>> SwitchColorFactory()
+        +createSFrance() : SwitchColorStrategy
+        +createSGermany() : SwitchColorStrategy
+        +createSBicolor() : SwitchColorStrategy
+
+    }
+	class TrafficLight {
+		- isOn: Boolean
+		+ <<create>> TrafficLight()
+		+ isOn() : Boolean
+		+ getColor() : LightColor
+		+ onOff()
+		+ switchColor()
+		+ setSwitchColorStrategy( strategy:SwitchColorStrategy )
+	}
+    interface Observer <<interface>> {
+        +ShowLight(isOn : Boolean, color : LightColor)
+    }
+    class Stalker implements Observer{
+        + <<create>> Stalker()
+        +ShowLight(isOn : Boolean, color : LightColor)
+    }
+	enum LightColor {
+		GREEN
+		ORANGE
+		RED
+	}
+	class SwitchColorStrategy <<interface>> {
+		+ switchColor( currentColor:LightColor ) : LightColor
+	}
+	class SwitchFrance implements SwitchColorStrategy {
+		+ <<create>> SwitchFrance()
+		+ switchColor( currentColor:LightColor ) : LightColor
+	}
+	class SwitchGermany implements SwitchColorStrategy {
+		+ <<create>> SwitchGermany( currentColor:LightColor )
+		+ switchColor( currentColor:LightColor ) : LightColor
+	}
+    class SwitchBicolor implements SwitchColorStrategy {
+        + <<create>> SwitchFrance()
+        + switchColor( currentColor:LightColor ) : LightColor
+    }
+    class MainWindow implements Observer{
+        + <<create> MainWindow()
+        + lightOne(color : LightColor)
+        + lightNone()
+    }
+}
+class TrafficLightApp {
+	+ {static} main( args:String[] )
+}
+
+
+
+TrafficLight *-l-> "1\n- color" LightColor : > alternate
+TrafficLight o--> "1\n- strategy" SwitchColorStrategy : > choose
+SwitchGermany *-u-> "1\n- lastColor" LightColor : > remember
+TrafficLightApp ..> TrafficLight : > <<create>>
+'TrafficLightApp ..> LightColor : > <<uses>>
+TrafficLight o--> Observer : observe <
+TrafficLight ..> Stalker : <<uses>
+TrafficLight ..> SwitchColorFactory : <<uses>
+SwitchColorFactory ...> SwitchColorStrategy : <<uses>>
+SwitchColorFactory ...> SwitchFrance : <<uses>>
+SwitchColorFactory ...> SwitchGermany : <<uses>>
+SwitchColorFactory ...> SwitchBicolor : <<uses>>
+TrafficLightApp ..> Stalker : > <<uses>>
+TrafficLightApp ..> MainWindow : > <<create>>
+TrafficLight ..> MainWindow : <<uses>
+
+'SwitchGermany *-l-> "1\n- _lastColor" LightColor : > remember
+'TrafficLightApp .d.> SwitchGermany : > <<uses>>
+
+@enduml
