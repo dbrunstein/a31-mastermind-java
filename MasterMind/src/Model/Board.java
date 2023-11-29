@@ -1,5 +1,6 @@
 package Model;
 
+import java.util.ArrayList;
 import java.util.Scanner;
 
 public class Board {
@@ -34,6 +35,47 @@ public class Board {
     public void addScore(int score){
         this.player.addScore(score);
     }
+    public void askCombination(){ // demande combination au joueur
+        Scanner myObj = new Scanner(System.in);  // Create a Scanner object
+        Combination playerCombination = new Combination();
+        ArrayList<Pawn> pawnList = new ArrayList<>(); // à grand remplacer par une factory peut-être ?
+        System.out.println("Enter combination : RED, GREEN, BLUE, YELLOW, ORANGE, BLACk, WHITE");
+        for(int i =0;i<this.getPawnAmount();i++){
+            String response = myObj.nextLine();  // Read user input
+            pawnList.add(new Pawn(this.whatColor(response)));
+        }
+        playerCombination.setCombination(pawnList);
+        this.player.setCombination(playerCombination);
+    }
+    public Color whatColor(String colorString){ // traduction foireuse du string à l'enum
+        Color color = Color.WHITE;
+        switch (colorString){
+            case"RED":
+                color = Color.RED;
+                break;
+            case"GREEN":
+                color = Color.GREEN;
+                break;
+            case"BLUE":
+                color = Color.BLUE;
+                break;
+            case"YELLOW":
+                color = Color.YELLOW;
+                break;
+            case"ORANGE":
+                color = Color.ORANGE;
+                break;
+            case"BLACK":
+                color = Color.BLACK;
+                break;
+            case"WHITE":
+                break;
+            default:
+                break;
+        }
+        return color;
+    }
+
     public Boolean wantToPlay(){ // pour le joueur, sera probablement manipulé par le controller plus tard
         Boolean reply = false;
         Scanner myObj = new Scanner(System.in);  // Create a Scanner object

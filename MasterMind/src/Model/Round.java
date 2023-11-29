@@ -22,15 +22,16 @@ public class Round {
             this.attemptsLeft--;
             Combination playerCombination = this.game.getPlayerCombination();
             this.testCombination(playerCombination);
-
+            this.displayHints();
         }
     }
     public void playRound(){
         for(int i=0;i<this.game.getAttemptAmount();i++){ // Il faudra peut-être unifier attemptLeft et le setting
             if(this.game.wantToPlay()){ // sera plus tard géré via controller et view
+                this.game.askCombination();
                 this.playOneAttempt();
                 if(this.hasWon()){ // check si il a gagné
-
+                    this.won();
                     i=this.game.getAttemptAmount()+1; // break
                 }
             }
@@ -44,14 +45,12 @@ public class Round {
             this.attemptsLeft--;
         }
     }
-
-
     public int getScore(){
         return this.localScore;
     }
     public void testCombination(Combination combination){
-        this.hintsline = this.secretCombination.testCombination(combination);
-    }
+        this.hintsline = this.secretCombination.testCombination(combination); // remplace la liste afin d'éviter d'avoir
+    }                                                                         // les hints de la dernière tentative
     public Boolean hasWon(){
         Boolean hasWon = false;
         int nbRight = 0;

@@ -43,6 +43,9 @@ public class Game {
     public Boolean wantToPlay(){
         return this.board.wantToPlay();
     }
+    public void askCombination(){
+        this.board.askCombination();
+    }
     public Combination getPlayerCombination(){
         return this.board.getPlayerCombination();
     }
