@@ -5,10 +5,13 @@ import java.util.ArrayList;
 public class Game {
     private ArrayList<Round> roundList;
     private Settings settings;
-    private Player player;
+    private Board board;
 
     public Game(){
         this.roundList = new ArrayList<Round>();
+    }
+    public void setBoard(Board board){
+        this.board = board;
     }
     public void setRoundList(){
         for(int i = 0;i<this.getRoundAmount();i++){
@@ -16,7 +19,7 @@ public class Game {
         }
     }
     public void addScore(int score){
-        this.player.addScore(score);
+        this.board.addScore(score);
     }
     public int getRoundAmount(){
         return this.settings.getRoundAmount();

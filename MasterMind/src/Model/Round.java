@@ -13,8 +13,12 @@ public class Round {
         this.game = game;
         this.secretCombination.createCombination(this.game.getPawnAmount()); //crée la combinaison
         this.localScore = 0;
+        this.hintsline = new ArrayList<Hint>();
     }
     public int getScore(){
         return this.localScore;
+    }
+    public void testCombination(Combination combination){
+        this.hintsline = this.secretCombination.testCombination(combination);
     }
 }
