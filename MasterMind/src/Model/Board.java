@@ -51,7 +51,7 @@ public class Board {
         this.player.setCombination(playerCombination);
     }
     public Color whatColor(String colorString){ // traduction foireuse du string à l'enum
-        Color color = Color.WHITE;
+        Color color = Color.WHITE;              // à migrer vers MasterUtils
         switch (colorString){
             case"RED":
                 color = Color.RED;
@@ -84,9 +84,10 @@ public class Board {
         Scanner myObj = new Scanner(System.in);  // Create a Scanner object
         System.out.println("Wanna play a game? [y/n]");
 
-        String response = myObj.nextLine();  // Read user input
-        if(reply.equals("y")){
+        String response = myObj.next();  // Read user input
+        if(response.equals("y")){
             reply = true;
+            System.out.println("OUI");
         }
         return reply;
     }

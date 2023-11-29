@@ -27,7 +27,8 @@ public class Round {
     }
     public void playRound(){
         for(int i=0;i<this.game.getAttemptAmount();i++){ // Il faudra peut-être unifier attemptLeft et le setting
-            if(this.game.wantToPlay()){ // sera plus tard géré via controller et view
+            System.out.println("Round : "+i);
+            if(this.game.wantToPlay()==true){ // sera plus tard géré via controller et view
                 this.game.askCombination();
                 this.playOneAttempt();
                 if(this.hasWon()){ // check si il a gagné
@@ -37,8 +38,10 @@ public class Round {
                 }
             }
             else{
+                System.out.println("Skipping round");
                 this.skipRound();
             }
+
         }
     }
     public void skipRound(){
