@@ -1,11 +1,11 @@
-import Model.MasterMindGame;
+import Model.Plateau;
 import View.StartWindow;
 
 public class MasterMindApp {
     public static void main(String[] args) {
-        MasterMindGame game = new MasterMindGame();
+        Plateau game = new Plateau();
         StartWindow startWindow = new StartWindow();
-        //startWindow.add(new ImageCanvas());
+
 
 
     }

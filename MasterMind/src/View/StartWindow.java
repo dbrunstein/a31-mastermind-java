@@ -1,6 +1,6 @@
 package View;
 
-import Model.MasterUtils;
+import Model.ImageFactory;
 import Model.Observer;
 
 import javax.swing.*;

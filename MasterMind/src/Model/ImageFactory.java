@@ -1,13 +1,13 @@
-package View;
+package Model;
 
 import javax.swing.*;
 import java.awt.*;
 
 public class ImageFactory {
     private String filename;
-    private static final String error_path = "img/err.png";
+    private static final String ERROR_PATH = "img/err.png";
     public ImageFactory(){
-        this.filename = error_path;
+        this.filename = ERROR_PATH;
     } // en absence de chemin, envoie l'image par défaut
     public ImageFactory(String filename){
         this.filename = filename;
@@ -18,7 +18,7 @@ public class ImageFactory {
             return new ImageIcon(imgURL, description);
         } else {
             System.err.println("Couldn't find file: " + path);
-            return createImageIcon(error_path,"Missing Image");
+            return createImageIcon(ERROR_PATH,"Missing Image");
         }
     }
     public JLabel getLabel(){ // renvoie un label avec l'image contenu dedans
