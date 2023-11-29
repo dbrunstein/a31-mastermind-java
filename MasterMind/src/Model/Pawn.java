@@ -11,4 +11,5 @@ public class Pawn {
     public Color getPawnColor(){
         return this.pawnColor;
     }
+
 }

@@ -5,7 +5,7 @@ import View.StartWindow;
 public class MasterMindApp {
     public static void main(String[] args) {
         Player player = new Player();
-        Board game = new Board(player);
+        Board board = new Board(player);
         StartWindow startWindow = new StartWindow();
 
 

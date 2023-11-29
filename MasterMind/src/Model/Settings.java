@@ -11,11 +11,14 @@ public class Settings {
     private final int  COMBINATION_MAX = 6;
     private int attemptAmount;
     private final int  ATTEMPT_MAX = 12;
+    private HintDisplayMode displayMode;
+    private final HintDisplayMode DEFAULT_DISPLAY_MODE = HintDisplayMode.CLASSIC;
     public Settings(){
         this.roundAmount = 3;
         this.pawnAmount = PAWN_MAX;
         this.combinationPawnAmount = 4;
         this.attemptAmount = 10;
+        this.displayMode = DEFAULT_DISPLAY_MODE;
     }
     public void setRoundAmount(int roundAmount){
         if(roundAmount<=ROUND_MAX){
@@ -51,16 +54,16 @@ public class Settings {
             System.out.println("MAX ATTEMPTS REACHED");
         }
     }
-    public int getRoundAmount(){
+    public int getRoundAmount(){ // nombre de round par game
         return this.roundAmount;
     }
     public int getPawnAmount(){
         return this.pawnAmount;
-    }
-    public int getCombinationPawnAmount(){
+    } // nombre de pions du joueur
+    public int getCombinationPawnAmount(){ // nombre de pions de la combinaison
         return this.combinationPawnAmount;
     }
-    public int getAttemptAmount(){
+    public int getAttemptAmount(){ // nombre de tentative
         return this.attemptAmount;
     }
 }

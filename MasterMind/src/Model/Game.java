@@ -4,11 +4,12 @@ import java.util.ArrayList;
 
 public class Game {
     private ArrayList<Round> roundList;
-    private Settings settings;
+
     private Board board;
 
-    public Game(){
+    public Game(Board board){
         this.roundList = new ArrayList<Round>();
+        this.board = board;
     }
     public void setBoard(Board board){
         this.board = board;
@@ -22,15 +23,20 @@ public class Game {
         this.board.addScore(score);
     }
     public int getRoundAmount(){
-        return this.settings.getRoundAmount();
+        return this.board.getRoundAmount();
     }
     public int getPawnAmount(){
-        return this.settings.getPawnAmount();
+        return this.board.getPawnAmount();
     }
     public int getCombinationPawnAmount(){
-        return this.settings.getCombinationPawnAmount();
+        return this.board.getCombinationPawnAmount();
     }
     public int getAttemptAmount(){
-        return this.settings.getAttemptAmount();
+        return this.board.getAttemptAmount();
     }
+
+    public Combination getPlayerCombination(){
+        return this.board.getPlayerCombination();
+    }
+
 }
