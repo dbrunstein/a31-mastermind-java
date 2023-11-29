@@ -27,7 +27,6 @@ public class StartWindow extends JFrame implements Observer {
 
         JPanel mainPanel = new JPanel();
         mainPanel.setLayout(new BorderLayout(1,BoxLayout.PAGE_AXIS));
-        //mainPanel.setLayout(new BoxLayout(mainPanel,BoxLayout.PAGE_AXIS));
 
         // BTN PANEL
         btnPanel.add(btnNewGame);
