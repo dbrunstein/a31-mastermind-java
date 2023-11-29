@@ -1,5 +1,7 @@
 package Model;
 
+import java.util.Scanner;
+
 public class Board {
     private Game game;
     private Player player;
@@ -8,13 +10,11 @@ public class Board {
         this.player = player;
         this.settings = new Settings();
     }
-    public void addScore(int score){
-        this.player.addScore(score);
-    }
+
     public void startNewGame(){
         this.game = new Game(this);
     }
-
+    //// GET-VALEUR OPTIONS
     public int getRoundAmount(){
         return this.settings.getRoundAmount();
     }
@@ -27,8 +27,22 @@ public class Board {
     public int getAttemptAmount(){
         return this.settings.getAttemptAmount();
     }
+    //// PLAYER-RELATED
     public Combination getPlayerCombination(){
         return this.player.getCombination();
     }
+    public void addScore(int score){
+        this.player.addScore(score);
+    }
+    public Boolean wantToPlay(){ // pour le joueur, sera probablement manipulé par le controller plus tard
+        Boolean reply = false;
+        Scanner myObj = new Scanner(System.in);  // Create a Scanner object
+        System.out.println("Wanna play a game? [Y/N]");
 
+        String response = myObj.nextLine();  // Read user input
+        if(reply.equals("Y")){
+            reply = true;
+        }
+        return reply;
+    }
 }

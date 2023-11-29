@@ -20,4 +20,10 @@ public class Hint {
         this.rightColor = rightColor;
         this.knownPosition = knownPosition;
     }
+    public Boolean getHintPosition(){
+        return this.knownPosition;
+    }
+    public Boolean getHintColor(){
+        return this.rightColor;
+    }
 }
