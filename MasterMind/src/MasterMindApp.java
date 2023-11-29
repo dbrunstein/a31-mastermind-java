@@ -4,10 +4,11 @@ import View.StartWindow;
 
 public class MasterMindApp {
     public static void main(String[] args) {
-        Player player = new Player();
+        /*Player player = new Player();
         Board board = new Board(player);
-        StartWindow startWindow = new StartWindow();
-
+        StartWindow startWindow = new StartWindow();*/
+        System.out.println("TEST");
+        //board.startNewGame();
 
 
     }

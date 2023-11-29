@@ -22,4 +22,7 @@ public class Player {
     public Combination getCombination(){
         return this.combination;
     }
+    public int getScore(){
+        return this.score;
+    }
 }

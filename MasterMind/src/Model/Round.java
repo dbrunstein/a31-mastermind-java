@@ -32,6 +32,7 @@ public class Round {
                 this.playOneAttempt();
                 if(this.hasWon()){ // check si il a gagné
                     this.won();
+
                     i=this.game.getAttemptAmount()+1; // break
                 }
             }

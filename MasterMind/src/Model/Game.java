@@ -10,6 +10,7 @@ public class Game {
     public Game(Board board){
         this.roundList = new ArrayList<Round>();
         this.board = board;
+        this.setRoundList();
     }
     public void setBoard(Board board){
         this.board = board;

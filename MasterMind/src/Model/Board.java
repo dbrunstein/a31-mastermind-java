@@ -12,8 +12,11 @@ public class Board {
         this.settings = new Settings();
     }
 
-    public void startNewGame(){
+    public void startNewGame(){ // start game basique pour l'instant
+        System.out.println("TEST");
         this.game = new Game(this);
+        this.game.play();
+        System.out.println("Score final : " + this.player.getScore());
     }
     //// GET-VALEUR OPTIONS
     public int getRoundAmount(){
