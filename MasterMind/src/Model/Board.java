@@ -43,7 +43,7 @@ public class Board {
         Combination playerCombination = new Combination();
         ArrayList<Pawn> pawnList = new ArrayList<>(); // à grand remplacer par une factory peut-être ?
         System.out.println("Enter combination : RED, GREEN, BLUE, YELLOW, ORANGE, BLACk, WHITE");
-        for(int i =0;i<this.getPawnAmount();i++){
+        for(int i =0;i<this.getCombinationPawnAmount();i++){
             String response = myObj.nextLine();  // Read user input
             pawnList.add(new Pawn(this.whatColor(response)));
         }

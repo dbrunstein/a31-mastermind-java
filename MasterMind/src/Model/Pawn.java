@@ -5,6 +5,9 @@ public class Pawn {
     public Pawn(){
         this.pawnColor = MasterUtils.randomColor();
     }
+    public void setPawnColor(Color pawnColor){
+        this.pawnColor = pawnColor;
+    }
     public Pawn(Color color){
         this.pawnColor = color;
     }
