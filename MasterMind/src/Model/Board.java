@@ -31,6 +31,9 @@ public class Board {
     public int getAttemptAmount(){
         return this.settings.getAttemptAmount();
     }
+    public HintDisplayMode getDisplayMode(){
+        return this.settings.getDisplayMode();
+    }
     //// PLAYER-RELATED
     public Combination getPlayerCombination(){
         return this.player.getCombination();

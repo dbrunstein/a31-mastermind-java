@@ -66,4 +66,7 @@ public class Settings {
     public int getAttemptAmount(){ // nombre de tentative
         return this.attemptAmount;
     }
+    public HintDisplayMode getDisplayMode(){
+        return this.displayMode;
+    }
 }

@@ -28,8 +28,8 @@ public class Round {
     public void playRound(){
         for(int i=0;i<this.game.getAttemptAmount();i++){ // Il faudra peut-être unifier attemptLeft et le setting
             System.out.println("Round : "+i);
-            if(this.game.wantToPlay()==true){ // sera plus tard géré via controller et view
-                this.game.askCombination();
+            if(this.game.wantToPlay()){ // sera plus tard géré via controller et view
+                this.game.askCombination(); // obtient la combinaison du joueur
                 this.playOneAttempt();
                 if(this.hasWon()){ // check si il a gagné
                     this.won();
@@ -37,6 +37,7 @@ public class Round {
                 }
                 else{
                     System.out.println("WRONG");
+                    this.calculateLocalScore();
                     this.displayHints();
                 }
             }
@@ -44,7 +45,6 @@ public class Round {
                 System.out.println("Skipping round");
                 this.skipRound();
             }
-
         }
     }
     public void skipRound(){
@@ -55,9 +55,25 @@ public class Round {
     public int getScore(){
         return this.localScore;
     }
+    public void calculateLocalScore(){ // calcule le score à chaque tentative
+        for(Hint hint : this.secretCombination.getHintsline()){
+            if(hint.getHintPosition()){ // bien placé
+                this.localScore += 3;
+            }
+            else{ // mal placé
+                this.localScore += 1;
+            }
+        }
+    }
     public void testCombination(Combination combination){
         this.secretCombination.testCombination(combination); // remplace la liste afin d'éviter d'avoir
     }                                                                         // les hints de la dernière tentative
+
+    public Boolean hasWon(){ // Demande à la combinaison si la combinaison est trouvée
+        Boolean hasWon = this.secretCombination.combinationIsEqual(this.game.getPlayerCombination());
+        return hasWon;
+    }
+    /* déprécié, fait la même chose que combinationIsEqual (avec les hints) (initialement abandonnée car hints cassés)
     public Boolean hasWon(){ // voir pour le refaire dans combination ?
         Boolean hasWon = false;
         int nbRight = 0;
@@ -70,9 +86,8 @@ public class Round {
             hasWon = true; // il gagne
         }
         return hasWon;
-    }
+    }*/
     public void displayHints(){
-        ;
         if(this.secretCombination.getHintsline().size()==0){
             System.out.println("YOU RE SHIT!!!! NO HINTS FOR YOU!!!!");
         }
@@ -81,7 +96,11 @@ public class Round {
         }
     }
     public void won(){
+        if(this.game.getDisplayMode()==HintDisplayMode.CLASSIC){
+            this.localScore+= 4;
+        }
         System.out.println("You have won this round!!!! :DDDDDDD");
         System.out.println("This round Score : "+this.localScore);
+        this.attemptsLeft = 0;
     }
 }

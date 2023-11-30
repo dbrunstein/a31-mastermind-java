@@ -32,6 +32,7 @@ public class Combination {
             System.out.println(pawn.getPawnColor());
         }
     }
+    // test pour les hints, probablement à refaire vu la tronche monstrueuse du truc
     public void testCombination(Combination combination){
         ArrayList<Pawn> combinationList = combination.getCombination();
         ArrayList<Color> alreadyInList = new ArrayList<Color>();
@@ -39,34 +40,46 @@ public class Combination {
 
         for(int i=0;i<combinationList.size();i++){
             Pawn pawn = combinationList.get(i);
-            if(!alreadyInList.contains(pawn.getPawnColor())){ // si la couleur n'est pas déja inclus
+            //if(!alreadyInList.contains(pawn.getPawnColor())){ // si la couleur n'est pas déja inclus
                 if(this.containsColor(pawn)){ // si la couleur est contenue dedans
-                    System.out.println("SAME COLOR : PAWN NUMBER : "+i);
-                    if(this.positionIsKnown(pawn,combinationList)){ // la bonne couleur et position
+
+                    if(this.positionIsKnown(pawn,i)){ // la bonne couleur et position
                         hintList.add(new Hint(true,true));
                         System.out.println(" SAME POSITION : PAWN NUMBER : "+i);
                     }
                     else{
                         hintList.add(new Hint(true)); // juste la bonne couleur
-                        System.out.println("FAILED 1 : PAWN NUMBER : "+i);
+                        System.out.println("SAME COLOR : PAWN NUMBER : "+i);
                     }
                 }
                 System.out.println("TOTAL FAILURE : PAWN NUMBER : "+i);
                 alreadyInList.add(pawn.getPawnColor());
-            }
+            //}
         }
         this.displayCombination();
         this.hintsline = hintList;
     }
+    public Boolean combinationIsEqual(Combination combination){ // si les combinaisons sont égal (même couleur/position)
+        Boolean isEqual = false;
+        int nbRight = 0;
+        ArrayList<Pawn> pawnList = combination.getCombination();
+        ArrayList<Pawn> pawnListSecret = this.getCombination();
+        for(int i=0;i<pawnList.size();i++){
+            if(this.comparePawn(pawnList.get(i),pawnListSecret.get(i))){
+                nbRight++;
+            }
+        }
+        if(nbRight==pawnList.size()){
+            isEqual = true;
+        }
+        return isEqual;
+    }
     //fonction monstrueusement compliquée pour rien
-    public Boolean positionIsKnown(Pawn pawn, ArrayList<Pawn> combinationList){ // test si la couleur est à la bonne position
+    public Boolean positionIsKnown(Pawn pawn,int index){ // test si la couleur est à la bonne position
         Boolean isKnown = false;
         ArrayList<Pawn> mainList = this.getCombination();
-        for(int i=0;i<mainList.size();i++){
-            if(this.comparePawn(mainList.get(i),pawn) && mainList.get(i)==combinationList.get(i)){ // && i==y
-                isKnown = true;
-                i = mainList.size()+1; // break
-            }
+        if(this.comparePawn(mainList.get(index),pawn)){
+            isKnown = true;
         }
         return isKnown;
     }

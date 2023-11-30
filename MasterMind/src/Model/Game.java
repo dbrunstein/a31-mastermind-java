@@ -39,6 +39,9 @@ public class Game {
     public int getAttemptAmount(){
         return this.board.getAttemptAmount();
     }
+    public HintDisplayMode getDisplayMode(){
+        return this.board.getDisplayMode();
+    }
 
     //// PLAYER-RELATED
     public Boolean wantToPlay(){
