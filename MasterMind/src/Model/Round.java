@@ -4,7 +4,6 @@ import java.util.ArrayList;
 
 public class Round {
     private Combination secretCombination;
-
     private Game game;
     private int localScore;
     private int attemptsLeft;
@@ -56,6 +55,7 @@ public class Round {
         return this.localScore;
     }
     public void calculateLocalScore(){ // calcule le score à chaque tentative
+        this.localScore = 0; // car c'est de la dernière manche qui compte
         for(Hint hint : this.secretCombination.getHintsline()){
             if(hint.getHintPosition()){ // bien placé
                 this.localScore += 3;
