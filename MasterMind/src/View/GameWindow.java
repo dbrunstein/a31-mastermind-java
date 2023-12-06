@@ -37,13 +37,37 @@ public class GameWindow extends JFrame implements Observer {
         JLabel black = new JLabel(imageFactory.createImageIcon("img/colors/black.png", "color black"));
         JLabel green = new JLabel(imageFactory.createImageIcon("img/colors/green.png", "color green"));
 
-        JPanel colorPanel = new JPanel(new FlowLayout());
-        JPanel selectPanel = new JPanel(new FlowLayout());
+        // à mettre en attribut une fois stable
+        JPanel mainPanel = new JPanel(new BorderLayout()); // contient affichage et selection
+        JPanel combinationsPanel = new JPanel(new GridLayout(0,1)); // juste affichage //
+
+
+
+
+        for(int i=0;i<masterController.getAttemptAmount();i++){ // test pour afficher plusieurs combinaisons test
+            JPanel colorPanel = new JPanel(new FlowLayout()); // une combinaison
+            JLabel blue1 = new JLabel(imageFactory.createImageIcon("img/colors/blue.png", "color blue"));
+            JLabel red1 = new JLabel(imageFactory.createImageIcon("img/colors/red.png", "color red"));
+            JLabel black1 = new JLabel(imageFactory.createImageIcon("img/colors/black.png", "color black"));
+            JLabel green1 = new JLabel(imageFactory.createImageIcon("img/colors/green.png", "color green"));
+            colorPanel.add(blue1);
+            colorPanel.add(red1);
+            colorPanel.add(black1);
+            colorPanel.add(green1);
+            combinationsPanel.add(colorPanel);
+        }
+
+        JPanel selectPanel = new JPanel(new FlowLayout()); // panel de selection des couleur (joueur)
 
         selectPanel.add(blue);
         selectPanel.add(red);
         selectPanel.add(black);
         selectPanel.add(green);
+
+        selectPanel.setBackground(Color.lightGray);
+
+        mainPanel.add(combinationsPanel,BorderLayout.CENTER);
+        mainPanel.add(selectPanel,BorderLayout.SOUTH);
 
         Button btnAddScore = new Button("Add");
         btnAddScore.addActionListener(actionEvent -> {
@@ -51,7 +75,7 @@ public class GameWindow extends JFrame implements Observer {
         });
 
         gamePanel.add(btnAddScore, BorderLayout.SOUTH);
-        gamePanel.add(selectPanel);
+        gamePanel.add(mainPanel,BorderLayout.CENTER);
 
 
         add(gamePanel);

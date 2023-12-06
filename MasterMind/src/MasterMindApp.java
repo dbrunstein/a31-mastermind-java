@@ -9,6 +9,6 @@ public class MasterMindApp {
         Board board = new Board(player);
         MasterController masterController = new MasterController(board);
         StartWindow startWindow = new StartWindow(masterController);
-        board.startNewGame();
+        //board.startNewGame();
     }
 }
