@@ -7,7 +7,12 @@ import javax.swing.*;
 import java.awt.*;
 
 public class GameWindow extends JFrame implements Observer {
+
+    //Déclaration des variables qui influent sur le changement visuel de la fenetre
     private JLabel scoreLabel;
+    private JLabel roundLabel;
+
+    //Déclaration du masterController
     private MasterController masterController;
 
 
@@ -63,7 +68,12 @@ public class GameWindow extends JFrame implements Observer {
         int updatedScore = masterController.getScore();
         scoreLabel.setText("Score: " + updatedScore);
 
+        int updatedRound = masterController.getRoundAmount();
+        roundLabel.setText("Round: " + updatedRound);
+
+
         /*liste de choses que la fenetre devra update :
+
 
         - le nombre de manches restantes
         - le nombre de pions juste et mal placés
