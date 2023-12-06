@@ -14,7 +14,6 @@ public class Board {
 
     public Board(Player player){
         this.player = player;
-        this.settings = new Settings();
         this.observers = new ArrayList<>();
     }
 
@@ -57,6 +56,9 @@ public class Board {
     //// PLAYER-RELATED
     public Combination getPlayerCombination(){
         return this.player.getCombination();
+    }
+    public Settings getSettings(){
+        return this.settings;
     }
     public void addScore(int score){ this.player.addScore(score); notifyObservers();}
     /*
@@ -113,6 +115,8 @@ public class Board {
         }
         return reply;
     }
+
+    public void setSettings(Settings settings) { this.settings = settings; }
 
 
 }
