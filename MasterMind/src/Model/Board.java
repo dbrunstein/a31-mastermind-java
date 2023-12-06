@@ -1,5 +1,7 @@
 package Model;
 
+import View.GameWindow;
+
 import java.util.ArrayList;
 import java.util.Scanner;
 
@@ -7,18 +9,36 @@ public class Board {
     private Game game;
     private Player player;
     private Settings settings;
+
+    private ArrayList<Observer> observers;
+
     public Board(Player player){
         this.player = player;
         this.settings = new Settings();
+        this.observers = new ArrayList<>();
+    }
+
+    public void addObserver(Observer observer) {
+        observers.add(observer);
+    }
+    public void removeObserver(Observer observer) {
+        observers.remove(observer);
+    }
+    private void notifyObservers() {
+        for (Observer observer : observers) {
+            observer.update(); // ou une méthode spécifique d'update selon le besoin
+        }
     }
 
     public void startNewGame(){ // start game basique pour l'instant
-        System.out.println("TEST");
         this.game = new Game(this);
         this.game.play();
-        System.out.println("Score final : " + this.player.getScore());
+        //System.out.println("Score final : " + this.player.getScore()); pas besoin d'afficher le score final pour le moment
     }
     //// GET-VALEUR OPTIONS
+    public int getScore(){
+        return player.getScore();
+    }
     public int getRoundAmount(){
         return this.settings.getRoundAmount();
     }
@@ -38,9 +58,7 @@ public class Board {
     public Combination getPlayerCombination(){
         return this.player.getCombination();
     }
-    public void addScore(int score){
-        this.player.addScore(score);
-    }
+    public void addScore(int score){ this.player.addScore(score); notifyObservers();}
     public void askCombination(){ // demande combination au joueur
         Scanner myObj = new Scanner(System.in);  // Create a Scanner object
         Combination playerCombination = new Combination();
@@ -94,4 +112,6 @@ public class Board {
         }
         return reply;
     }
+
+
 }

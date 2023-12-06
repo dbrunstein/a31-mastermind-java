@@ -27,7 +27,7 @@ public class Round {
     public void playRound(){
         for(int i=0;i<this.game.getAttemptAmount();i++){ // Il faudra peut-être unifier attemptLeft et le setting
             System.out.println("Round : "+i);
-            if(this.game.wantToPlay()){ // sera plus tard géré via controller et view
+            //if(this.game.wantToPlay()){ // sera plus tard géré via controller et view
                 this.game.askCombination(); // obtient la combinaison du joueur
                 this.playOneAttempt();
                 if(this.hasWon()){ // check si il a gagné
@@ -39,11 +39,11 @@ public class Round {
                     this.calculateLocalScore();
                     this.displayHints();
                 }
-            }
-            else{
+            //}
+            //else{
                 System.out.println("Skipping round");
                 this.skipRound();
-            }
+            //}
         }
     }
     public void skipRound(){
