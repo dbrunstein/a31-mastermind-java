@@ -14,7 +14,8 @@ public class MasterController {
     public void startNewGame(){
         board.startNewGame();
     }
-    //les différents gets
+
+    //###################### GETTERS ######################
     public int getScore() {
         return board.getScore();
     }
@@ -22,7 +23,7 @@ public class MasterController {
         return board.getRoundAmount();
     }
 
-    //les différents setters
+    //###################### SETTERS ######################
     public void addScore(int scoreAdded){
         board.addScore(scoreAdded);
     }
@@ -32,4 +33,6 @@ public class MasterController {
     public void addObserver(GameWindow gameWindow) {
         board.addObserver(gameWindow);
     }
+    public void removeObserver(GameWindow gameWindow) { board.removeObserver(gameWindow); }
+
 }

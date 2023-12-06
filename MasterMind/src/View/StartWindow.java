@@ -2,6 +2,7 @@ package View;
 
 import Controller.MasterController;
 import Model.Board;
+import Model.ImageFactory;
 
 import javax.swing.*;
 import java.awt.*;
@@ -53,10 +54,14 @@ public class StartWindow extends JFrame {
         JLabel score = new JLabel("High score : prout");
         sidepanel.add(score);
         sidepanel.setLayout(new BoxLayout(sidepanel, BoxLayout.PAGE_AXIS));
+        ImageFactory imageFactory = new ImageFactory();
+        JLabel image = new JLabel(imageFactory.createImageIcon("img/zatus3.gif", "ZIM"));
 
         // Ajout du panneau de boutons au panneau principal
         mainPanel.add(btnPanel, BorderLayout.LINE_START);
         mainPanel.add(sidepanel, BorderLayout.LINE_END);
+        mainPanel.add(image, BorderLayout.CENTER);
+
         setContentPane(mainPanel);
         setVisible(true);
 
@@ -65,6 +70,7 @@ public class StartWindow extends JFrame {
             sidepanel.setVisible(false);
             btnPanel.setVisible(false);
             btnSettings.setVisible(false);
+            image.setVisible(false);
 
             // Ajout du panneau de paramètres au centre du panneau principal
             JPanel settingsPanel = new JPanel();
@@ -82,6 +88,7 @@ public class StartWindow extends JFrame {
                 sidepanel.setVisible(true);
                 btnPanel.setVisible(true);
                 btnSettings.setVisible(true);
+                image.setVisible(true);
 
                 // Masque le panneau de paramètres et les boutons
                 settingsPanel.setVisible(false);
