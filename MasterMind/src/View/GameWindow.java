@@ -10,6 +10,8 @@ public class GameWindow extends JFrame implements Observer {
     private JLabel scoreLabel;
     private MasterController masterController;
 
+
+
     public GameWindow(MasterController masterController) throws InterruptedException {
         // Initialisation de la fenêtre
         super("MasterMind 2077");
@@ -45,7 +47,7 @@ public class GameWindow extends JFrame implements Observer {
         scoreLabel.setText("Score: " + updatedScore);
 
         /*liste de choses que la fenetre devra update :
-        - le score
+
         - le nombre de manches restantes
         - le nombre de pions juste et mal placés
         - la combinaison secrète mais seulement à la fin
