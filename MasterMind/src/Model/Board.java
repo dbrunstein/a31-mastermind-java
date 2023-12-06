@@ -59,6 +59,7 @@ public class Board {
         return this.player.getCombination();
     }
     public void addScore(int score){ this.player.addScore(score); notifyObservers();}
+    /*
     public void askCombination(){ // demande combination au joueur
         Scanner myObj = new Scanner(System.in);  // Create a Scanner object
         Combination playerCombination = new Combination();
@@ -98,7 +99,7 @@ public class Board {
                 break;
         }
         return color;
-    }
+    }*/
 
     public Boolean wantToPlay(){ // pour le joueur, sera probablement manipulé par le controller plus tard
         Boolean reply = false;
