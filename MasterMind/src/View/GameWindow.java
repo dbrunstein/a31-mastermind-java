@@ -7,9 +7,10 @@ import javax.swing.*;
 import java.awt.*;
 
 public class GameWindow extends JFrame implements Observer {
-    private JLabel scoreLabel;
+    private JLabel scoreLabel; // contient le score
+    private JPanel combinationsPanel; // contient les labels des combinaisons
+    private JPanel selectPanel; // contient les labels que choisit le joueur
     private MasterController masterController;
-
 
 
     public GameWindow(MasterController masterController) throws InterruptedException {
@@ -39,10 +40,7 @@ public class GameWindow extends JFrame implements Observer {
 
         // à mettre en attribut une fois stable
         JPanel mainPanel = new JPanel(new BorderLayout()); // contient affichage et selection
-        JPanel combinationsPanel = new JPanel(new GridLayout(0,1)); // juste affichage //
-
-
-
+        combinationsPanel = new JPanel(new GridLayout(0,1)); // affichage des combinaisons
 
         for(int i=0;i<masterController.getAttemptAmount();i++){ // test pour afficher plusieurs combinaisons test
             JPanel colorPanel = new JPanel(new FlowLayout()); // une combinaison
@@ -57,7 +55,7 @@ public class GameWindow extends JFrame implements Observer {
             combinationsPanel.add(colorPanel);
         }
 
-        JPanel selectPanel = new JPanel(new FlowLayout()); // panel de selection des couleur (joueur)
+        selectPanel = new JPanel(new FlowLayout()); // panel de selection des couleur (joueur)
 
         selectPanel.add(blue);
         selectPanel.add(red);
