@@ -1,8 +1,6 @@
 package View;
 
 import Controller.MasterController;
-import Model.Board;
-import Model.ImageFactory;
 
 import javax.swing.*;
 import java.awt.*;
