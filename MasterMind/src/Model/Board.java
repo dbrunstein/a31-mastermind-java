@@ -1,16 +1,14 @@
 package Model;
 
-import View.GameWindow;
-
 import java.util.ArrayList;
 import java.util.Scanner;
 
 public class Board {
     private Game game;
-    private Player player;
+    private final Player player;
     private Settings settings;
 
-    private ArrayList<Observer> observers;
+    private final ArrayList<Observer> observers;
 
     public Board(Player player){
         this.player = player;
@@ -57,9 +55,11 @@ public class Board {
     public Combination getPlayerCombination(){
         return this.player.getCombination();
     }
-    public Settings getSettings(){
-        return this.settings;
-    }
+    public Settings getSettings(){ return this.settings; }
+
+    // SETTERS
+    public void setSettings(Settings settings) { this.settings = settings; }
+
     public void addScore(int score){ this.player.addScore(score); notifyObservers();}
     /*
     public void askCombination(){ // demande combination au joueur
@@ -116,7 +116,6 @@ public class Board {
         return reply;
     }
 
-    public void setSettings(Settings settings) { this.settings = settings; }
 
 
 }
