@@ -21,10 +21,10 @@ class Board {
     - observers: ArrayList<Observer>
 
     + Board(player: Player)
-    + addObserver(observer: Observer): void
-    + removeObserver(observer: Observer): void
-    + notifyObservers(): void
-    + startNewGame(): void
+    + addObserver(observer: Observer)
+    + removeObserver(observer: Observer)
+    + notifyObservers()
+    + startNewGame()
     + getScore(): int
     + getRoundAmount(): int
     + getPawnAmount(): int
@@ -33,8 +33,8 @@ class Board {
     + getDisplayMode(): HintDisplayMode
     + getPlayerCombination(): Combination
     + getSettings(): Settings
-    + setSettings(settings: Settings): void
-    + addScore(score: int): void
+    + setSettings(settings: Settings)
+    + addScore(score: int)
     + wantToPlay(): Boolean
 }
 
@@ -46,10 +46,10 @@ class Settings {
     - displayMode: HintDisplayMode
 
     + Settings()
-    + setRoundAmount(roundAmount: int): void
-    + setPawnAmount(pawnAmount: int): void
-    + setCombinationPawnAmount(combinationPawnAmount: int): void
-    + setAttemptAmount(attemptAmount: int): void
+    + setRoundAmount(roundAmount: int)
+    + setPawnAmount(pawnAmount: int)
+    + setCombinationPawnAmount(combinationPawnAmount: int)
+    + setAttemptAmount(attemptAmount: int)
     + getRoundAmount(): int
     + getPawnAmount(): int
     + getCombinationPawnAmount(): int
@@ -62,18 +62,18 @@ class Game {
     - board: Board
 
     + Game(board: Board)
-    + setBoard(board: Board): void
-    + setRoundList(): void
-    + play(): void
+    + setBoard(board: Board)
+    + setRoundList()
+    + play()
     + getRoundAmount(): int
     + getPawnAmount(): int
     + getCombinationPawnAmount(): int
     + getAttemptAmount(): int
     + getDisplayMode(): HintDisplayMode
     + wantToPlay(): Boolean
-    + askCombination(): void
+    + askCombination()
     + getPlayerCombination(): Combination
-    + addScore(score: int): void
+    + addScore(score: int)
 }
 
 class Round {
@@ -83,17 +83,17 @@ class Round {
     - attemptsLeft: int
 
     + Round(game: Game)
-    + setBoard(board: Board): void
-    + setRoundList(): void
-    + playOneAttempt(): void
-    + playRound(): void
-    + skipRound(): void
+    + setBoard(board: Board)
+    + setRoundList()
+    + playOneAttempt()
+    + playRound()
+    + skipRound()
     + getScore(): int
-    + calculateLocalScore(): void
-    + testCombination(combination: Combination): void
+    + calculateLocalScore()
+    + testCombination(combination: Combination)
     + hasWon(): Boolean
-    + displayHints(): void
-    + won(): void
+    + displayHints()
+    + won()
 }
 
 class Player {
@@ -104,24 +104,22 @@ class Player {
 
     + Player()
     + Player(name: String)
-    + setCombination(combination: Combination): void
-    + addScore(score: int): void
+    + setCombination(combination: Combination)
+    + addScore(score: int)
     + getCombination(): Combination
     + getScore(): int
 }
 
 class Combination {
-    - pawnList: ArrayList<Pawn>
-    - hintsline: ArrayList<Hint>
 
     + Combination()
-    + createCombination(nbPawn: int): void
+    + createCombination(nbPawn: int)
     + getSize(): int
     + getCombination(): ArrayList<Pawn>
-    + setCombination(pawnList: ArrayList<Pawn>): void
+    + setCombination(pawnList: ArrayList<Pawn>)
     + getHintsline(): ArrayList<Hint>
-    + displayCombination(): void
-    + testCombination(combination: Combination): void
+    + displayCombination()
+    + testCombination(combination: Combination)
     + combinationIsEqual(combination: Combination): Boolean
     + positionIsKnown(pawn: Pawn, index: int): Boolean
     + containsColor(pawn: Pawn): Boolean
@@ -133,7 +131,7 @@ class Hint {
 
     + Hint()
     + Hint(type: hintType)
-    + setHint(type: hintType): void
+    + setHint(type: hintType)
     + getHintType(): HintType
 }
 enum HintType {
@@ -143,7 +141,7 @@ enum HintType {
 class Pawn {
     - pawnColor: Color
     + Pawn()
-    + setPawnColor(pawnColor: Color): void
+    + setPawnColor(pawnColor: Color)
     + Pawn(color: Color)
     + getPawnColor(): Color
 }
@@ -166,7 +164,7 @@ enum HintDisplayMode {
 }
 
 interface Observer {
-    update(): void
+    update()
 }
         }
         package View {
@@ -178,30 +176,30 @@ interface Observer {
             }
         }
 }
-
 'Base pas ouf mais c'est un début'
 '####VUES####'
-GameWindow *--> MasterController
+GameWindow  *--> "1" MasterController
 GameWindow ...|> Observer
 StartWindow ...|> Observer
 EndGameWindow ...|> Observer
 '####MODEL####'
-Combination *---> Pawn : > possède
-Pawn *---> Color : > possède
-Game *---> Round : > est un ensemble de
-Board o--> Observer : < observe
-Round *---> Combination : > possède (secret)
-Board *---> Game : > possède
-Board *--> Settings
-Settings *--> HintDisplayMode
-Board *--> Player : > possède information joueur
-Combination o--> Hint : connait
-Hint *--> HintType
+Combination  *---> "* -pawnList" Pawn : > possède
+Pawn  *-> "1"Color : > possède
+Game  *--> "*"Round : > est un ensemble de
+Board  o--> "*"Observer : < observe
+Round *--> Combination : > possède (secret)
+Board  *---> "1" Game : > possède
+Board  *-> "1"Settings
+Settings  *--> "1"HintDisplayMode
+Board  *--> "1"Player : > possède information joueur
+Combination  o--> "*"Hint : connait
+Hint  *--> "1" HintType
 Combination ...> HintType : <<uses>>
 Round ...> HintType : <<uses>>
 MasterController ...> Color : <<uses>>
-'a revoir'
-
+Game ...> HintDisplayMode : <<uses>>
+Game  o--> "1" Board
+'retirer les arg non primitif + ajout si privé dans agregats et compo'
 '####CONTROLLER####'
 MasterController ...> Board : > manipule
 '####MAIN####'

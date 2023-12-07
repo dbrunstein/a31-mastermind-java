@@ -68,7 +68,7 @@ public class GameWindow extends JFrame implements Observer {
                     System.out.println("Changement couleur");
                     // met à jour l'image
                     currentLabel.setIcon(imageFactory.createImageIcon("img/colors/pink.png", "color pink"));
-
+                    currentLabel.getIcon();// utilise pour mettre dans la case clickable, trouver un moyen d'obtenir la couleur
                 }
             });
             tabSelectLables[j] = currentLabel;
