@@ -40,21 +40,19 @@ public class Combination {
 
         for(int i=0;i<combinationList.size();i++){
             Pawn pawn = combinationList.get(i);
-            //if(!alreadyInList.contains(pawn.getPawnColor())){ // si la couleur n'est pas déja inclus
                 if(this.containsColor(pawn)){ // si la couleur est contenue dedans
 
                     if(this.positionIsKnown(pawn,i)){ // la bonne couleur et position
-                        hintList.add(new Hint(true,true));
+                        hintList.add(new Hint(HintType.KNOWN_POSITION));
                         System.out.println(" SAME POSITION : PAWN NUMBER : "+i);
                     }
                     else{
-                        hintList.add(new Hint(true)); // juste la bonne couleur
+                        hintList.add(new Hint()); // juste la bonne couleur
                         System.out.println("SAME COLOR : PAWN NUMBER : "+i);
                     }
                 }
                 System.out.println("TOTAL FAILURE : PAWN NUMBER : "+i);
                 alreadyInList.add(pawn.getPawnColor());
-            //}
         }
         this.displayCombination();
         this.hintsline = hintList;

@@ -3,27 +3,17 @@ package Model;
 public class Hint {
     private Boolean rightColor;
     private Boolean knownPosition;
+    private HintType type;
     public Hint(){ // si un pion est bien placé
-        this.rightColor = false;
-        this.knownPosition = false;
+        this.type = HintType.KNOWN_COLOR; // si un indice est créé, on part du principe qu'il connait la couleur
     }
-    public Hint(Boolean rightColor){ // si un pion est bien placé
-        this.rightColor = rightColor;
-        this.knownPosition = false;
+    public Hint(HintType type){ // si un pion est bien placé
+        this.type = type;
     }
-    public Hint(Boolean rightColor, Boolean knownPosition){ // si un pion est bien placé
-        this.rightColor = rightColor;
-        this.knownPosition = knownPosition;
+    public void setHint(HintType type){
+        this.type = type;
     }
-
-    public void setHint(Boolean rightColor, Boolean knownPosition){
-        this.rightColor = rightColor;
-        this.knownPosition = knownPosition;
-    }
-    public Boolean getHintPosition(){
-        return this.knownPosition;
-    }
-    public Boolean getHintColor(){
-        return this.rightColor;
+    public HintType getHintType(){
+        return this.type;
     }
 }

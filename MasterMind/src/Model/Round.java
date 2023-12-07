@@ -57,7 +57,7 @@ public class Round {
     public void calculateLocalScore(){ // calcule le score à chaque tentative
         this.localScore = 0; // car c'est de la dernière manche qui compte
         for(Hint hint : this.secretCombination.getHintsline()){
-            if(hint.getHintPosition()){ // bien placé
+            if(hint.getHintType()==HintType.KNOWN_POSITION){ // bien placé
                 this.localScore += 3;
             }
             else{ // mal placé
@@ -87,12 +87,12 @@ public class Round {
         }
         return hasWon;
     }*/
-    public void displayHints(){
+    public void displayHints(){ // juste du debug
         if(this.secretCombination.getHintsline().size()==0){
             System.out.println("YOU RE SHIT!!!! NO HINTS FOR YOU!!!!");
         }
         for(Hint hint : this.secretCombination.getHintsline()){
-            System.out.println("Is color right ?" + hint.getHintColor() +"| Is position right ?"+ hint.getHintPosition());
+            System.out.println("Is color right ?" + hint.getHintType() +"| Is position right ?"+ hint.getHintType());
         }
     }
     public void won(){

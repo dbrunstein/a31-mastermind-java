@@ -129,14 +129,14 @@ class Combination {
 }
 
 class Hint {
-    - type: hintType
+    - type: HintType
 
     + Hint()
     + Hint(type: hintType)
     + setHint(type: hintType): void
-    + getHintType(): hintType
+    + getHintType(): HintType
 }
-enum hintType {
+enum HintType {
     KNOWN_COLOR,
     KNOWN_POSITION
 }
@@ -196,7 +196,9 @@ Board *--> Settings
 Settings *--> HintDisplayMode
 Board *--> Player : > possède information joueur
 Combination o--> Hint : connait
-Hint *--> hintType
+Hint *--> HintType
+Combination ...> HintType : <<uses>>
+Round ...> HintType : <<uses>>
 'a revoir'
 
 '####CONTROLLER####'
