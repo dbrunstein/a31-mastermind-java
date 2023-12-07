@@ -11,6 +11,7 @@ public class GameWindow extends JFrame implements Observer {
     private JPanel combinationsPanel; // contient les labels des combinaisons
     private JPanel selectPanel; // contient les labels que choisit le joueur
 
+    private JLabel[][] tabCombinationLabels; // contient les labels des combinaisons affichées
     private JLabel roundLabel;
     private MasterController masterController;
 
@@ -26,6 +27,10 @@ public class GameWindow extends JFrame implements Observer {
 
         this.masterController = masterController;
         masterController.setGameWindow(this);
+
+        // nombre de tentatives + taille de la combinaison
+        tabCombinationLabels = new JLabel[masterController.getAttemptAmount()][masterController.getCombinationPawnAmount()];
+
 
         // Initialisation du panneau de jeu
         JPanel gamePanel = new JPanel(new BorderLayout());
@@ -46,17 +51,13 @@ public class GameWindow extends JFrame implements Observer {
 
         for(int i=0;i<masterController.getAttemptAmount();i++){ // test pour afficher plusieurs combinaisons test
             JPanel colorPanel = new JPanel(new FlowLayout()); // une combinaison
-            JLabel blue1 = new JLabel(imageFactory.createImageIcon("img/colors/blue.png", "color blue"));
-            JLabel red1 = new JLabel(imageFactory.createImageIcon("img/colors/red.png", "color red"));
-            JLabel black1 = new JLabel(imageFactory.createImageIcon("img/colors/black.png", "color black"));
-            JLabel green1 = new JLabel(imageFactory.createImageIcon("img/colors/green.png", "color green"));
-            colorPanel.add(blue1);
-            colorPanel.add(red1);
-            colorPanel.add(black1);
-            colorPanel.add(green1);
+
+            for(int j=0;j<masterController.getCombinationPawnAmount();j++){ // met les combinaisons "à zéro"
+                tabCombinationLabels[i][j] = new JLabel(imageFactory.createImageIcon("img/colors/pink.png", "color pink"));
+                colorPanel.add(tabCombinationLabels[i][j]);
+            }
             combinationsPanel.add(colorPanel);
         }
-
         selectPanel = new JPanel(new FlowLayout()); // panel de selection des couleur (joueur)
 
         selectPanel.add(blue);

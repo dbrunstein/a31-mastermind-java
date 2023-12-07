@@ -13,6 +13,7 @@ public class Board {
     public Board(Player player){
         this.player = player;
         this.observers = new ArrayList<>();
+        this.settings = new Settings(); // settings par défaut
     }
 
     public void addObserver(Observer observer) {
