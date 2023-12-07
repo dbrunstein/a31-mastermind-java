@@ -191,7 +191,7 @@ Pawn *---> Color : > possède
 Game *---> Round : > est un ensemble de
 Board o--> Observer : < observe
 Round *---> Combination : > possède (secret)
-Board o---> Game : > possède
+Board *---> Game : > possède
 Board *--> Settings
 Settings *--> HintDisplayMode
 Board *--> Player : > possède information joueur
@@ -199,6 +199,7 @@ Combination o--> Hint : connait
 Hint *--> HintType
 Combination ...> HintType : <<uses>>
 Round ...> HintType : <<uses>>
+MasterController ...> Color : <<uses>>
 'a revoir'
 
 '####CONTROLLER####'

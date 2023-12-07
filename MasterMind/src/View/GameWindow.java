@@ -5,12 +5,13 @@ import Model.Observer;
 
 import javax.swing.*;
 import java.awt.*;
+import java.awt.event.MouseAdapter;
+import java.awt.event.MouseEvent;
+import java.nio.channels.Channel;
 
 public class GameWindow extends JFrame implements Observer {
     private JLabel scoreLabel; // contient le score
-    private JPanel combinationsPanel; // contient les labels des combinaisons
-    private JPanel selectPanel; // contient les labels que choisit le joueur
-
+    private JLabel[] tabSelectLables; // contient les labels de selection du joueur
     private JLabel[][] tabCombinationLabels; // contient les labels des combinaisons affichées
     private JLabel roundLabel;
     private MasterController masterController;
@@ -30,7 +31,7 @@ public class GameWindow extends JFrame implements Observer {
 
         // nombre de tentatives + taille de la combinaison
         tabCombinationLabels = new JLabel[masterController.getAttemptAmount()][masterController.getCombinationPawnAmount()];
-
+        tabSelectLables = new JLabel[masterController.getPawnAmount()];
 
         // Initialisation du panneau de jeu
         JPanel gamePanel = new JPanel(new BorderLayout());
@@ -38,32 +39,41 @@ public class GameWindow extends JFrame implements Observer {
         scoreLabel = new JLabel("Score: 0", SwingConstants.CENTER);
         gamePanel.add(scoreLabel, BorderLayout.NORTH);
 
-        // zone test panels couleurs
+        // Image factory pour créer les images des couleurs
         ImageFactory imageFactory = new ImageFactory();
-        JLabel blue = new JLabel(imageFactory.createImageIcon("img/colors/blue.png", "color blue"));
-        JLabel red = new JLabel(imageFactory.createImageIcon("img/colors/red.png", "color red"));
-        JLabel black = new JLabel(imageFactory.createImageIcon("img/colors/black.png", "color black"));
-        JLabel green = new JLabel(imageFactory.createImageIcon("img/colors/green.png", "color green"));
 
-        // à mettre en attribut une fois stable
+        // panels contenant les labels des combinaisons et de selection
         JPanel mainPanel = new JPanel(new BorderLayout()); // contient affichage et selection
-        combinationsPanel = new JPanel(new GridLayout(0,1)); // affichage des combinaisons
+        JPanel combinationsPanel = new JPanel(new GridLayout(0,1)); // affichage des combinaisons
 
-        for(int i=0;i<masterController.getAttemptAmount();i++){ // test pour afficher plusieurs combinaisons test
+        for(int i=0;i<masterController.getAttemptAmount();i++){ // affichage des combinaisons
             JPanel colorPanel = new JPanel(new FlowLayout()); // une combinaison
 
             for(int j=0;j<masterController.getCombinationPawnAmount();j++){ // met les combinaisons "à zéro"
                 tabCombinationLabels[i][j] = new JLabel(imageFactory.createImageIcon("img/colors/pink.png", "color pink"));
+
                 colorPanel.add(tabCombinationLabels[i][j]);
             }
             combinationsPanel.add(colorPanel);
         }
-        selectPanel = new JPanel(new FlowLayout()); // panel de selection des couleur (joueur)
+        JPanel selectPanel = new JPanel(new FlowLayout()); // panel de selection des couleurs (joueur)
 
-        selectPanel.add(blue);
-        selectPanel.add(red);
-        selectPanel.add(black);
-        selectPanel.add(green);
+        String[] allColors = masterController.getAllColors(); // obtient toutes les couleurs sous forme de string
+
+        for(int j=0;j<masterController.getPawnAmount();j++){ // met l'ensemble des couleurs disponible
+            JLabel currentLabel = new JLabel(imageFactory.createImageIcon("img/colors/"+allColors[j]+".png", "color "+allColors[j]));
+
+            currentLabel.addMouseListener(new MouseAdapter() {
+                public void mousePressed(MouseEvent me) {
+                    System.out.println("Changement couleur");
+                    // met à jour l'image
+                    currentLabel.setIcon(imageFactory.createImageIcon("img/colors/pink.png", "color pink"));
+
+                }
+            });
+            tabSelectLables[j] = currentLabel;
+            selectPanel.add(tabSelectLables[j]);
+        }
 
         selectPanel.setBackground(Color.lightGray);
 

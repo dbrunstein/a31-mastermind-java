@@ -4,20 +4,23 @@ public class Settings {
 
     private int roundAmount;
     private final int  ROUND_MAX = 5;
+    private final int  ROUND_DEFAULT = 3;
     private int pawnAmount;
     private final int  PAWN_MAX = 8;
     private final int  PAWN_MIN = 4;
     private int combinationPawnAmount;
     private final int  COMBINATION_MAX = 6;
+    private final int  COMBINATION_DEFAULT = 4;
     private int attemptAmount;
     private final int  ATTEMPT_MAX = 12;
+    private final int  ATTEMPT_DEFAULT = 10;
     private HintDisplayMode displayMode;
     private final HintDisplayMode DEFAULT_DISPLAY_MODE = HintDisplayMode.CLASSIC;
     public Settings(){
-        this.roundAmount = 3;
+        this.roundAmount = ROUND_DEFAULT;
         this.pawnAmount = PAWN_MAX;
-        this.combinationPawnAmount = 4;
-        this.attemptAmount = 10;
+        this.combinationPawnAmount = COMBINATION_DEFAULT;
+        this.attemptAmount = ATTEMPT_DEFAULT;
         this.displayMode = DEFAULT_DISPLAY_MODE;
     }
     public void setRoundAmount(int roundAmount){
