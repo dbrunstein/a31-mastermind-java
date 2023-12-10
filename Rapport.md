@@ -28,4 +28,15 @@ La classe `MasterController` agit comme le lien central entre les différentes p
 
 Les interfaces graphiques (`StartWindow` et `GameWindow`) sont mises à jour dynamiquement grâce à la communication entre le contrôleur et le modèle à travers le pattern Observer. Lorsque le modèle change, les vues sont notifiées et actualisent leurs affichages en conséquence.
 
+## Traitement des combinaison
 
+La class `Combination` permet à la fois de créer une combinaison aléatoire et d'enregistrer celle du joueur.
+Le traitement des combinaison est effectué par la fonction **testCombination** directement sur la combinaison secrète
+afin que la valeur des pions ne soit connue que par sa propre combinaison ou la combinaison testé. 
+
+## Valeur des pions et indices
+
+Les pions `Pawn` utilise une enumération `Color` afin de cantonner leur couleur à celles connues par le model.
+
+Les indices utilise aussi une énumération `HintType`, étant alors soit KNOWN_COLOR (Seul la couleur est connue), 
+ou KNOWN_POSITION (La couleur et la position est connue) afin de simplifier le model.
