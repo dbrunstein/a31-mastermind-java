@@ -6,8 +6,8 @@ import javax.swing.*;
 
 public class colorButton extends JButton {
     private Color buttonColor;
-    public colorButton(JLabel label){
-        super((Icon) label);
+    public colorButton(ImageIcon icon){
+        super(icon);
     }
     public void setColor(Color color){
         this.buttonColor = color;

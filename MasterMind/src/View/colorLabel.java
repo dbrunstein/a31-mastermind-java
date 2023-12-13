@@ -6,8 +6,8 @@ import javax.swing.*;
 
 public class colorLabel extends JLabel {
     private Color labelColor;
-    public colorLabel(JLabel label){
-        super((Icon) label);
+    public colorLabel(ImageIcon icon){
+        super( icon);
     }
     public void setColor(Color color){
         this.labelColor = color;

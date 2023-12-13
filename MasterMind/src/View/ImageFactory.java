@@ -1,5 +1,7 @@
 package View;
 
+import Model.Color;
+
 import javax.swing.*;
 import java.awt.*;
 
@@ -21,6 +23,11 @@ public class ImageFactory {
             return createImageIcon(ERROR_PATH,"Missing Image");
         }
     }
+
+    public ImageIcon createImageColor(Color color){
+        return createImageIcon("img/colors/"+color.name()+".png","A beautiful color");
+    }
+
     public JLabel getLabel(){ // renvoie un label avec l'image contenu dedans
         JLabel label =new JLabel("",createImageIcon(this.filename,"ZIM"),JLabel.CENTER);
         label.setPreferredSize(new Dimension(250, 100));

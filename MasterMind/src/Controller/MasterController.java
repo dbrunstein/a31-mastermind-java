@@ -29,13 +29,16 @@ public class MasterController {
     public Combination getPlayerCombination(){ return board.getPlayerCombination(); }
     public Boolean wantToPlay(){ return board.wantToPlay(); }
     public Settings getSettings(){ return board.getSettings(); }
-    public String[] getAllColors(){
+    public String[] getAllColorsString(){
         Color[]colors=Color.values();
         String[] allColors = new String[colors.length];
         for(int i=0;i<allColors.length;i++){
             allColors[i] = colors[i].name();
         }
         return allColors;
+    }
+    public Color[] getAllColors(){
+        return Color.values();
     }
 
     //###################### SETTERS ######################

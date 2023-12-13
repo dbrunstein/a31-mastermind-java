@@ -12,9 +12,9 @@ import java.nio.channels.Channel;
 
 public class GameWindow extends JFrame implements Observer {
     private JLabel scoreLabel; // contient le score
-    private JButton[] tabSelectLables; // contient les labels de selection du joueur
-    private JLabel[][] tabCombinationLabels; // contient les labels des combinaisons affichées
-    private Icon selectedColor;
+    private colorButton[] tabSelectLables; // contient les labels de selection du joueur
+    private colorLabel[][] tabCombinationLabels; // contient les labels des combinaisons affichées
+    private Model.Color selectedColor;
     private JLabel roundLabel;
     private MasterController masterController;
 
@@ -32,8 +32,8 @@ public class GameWindow extends JFrame implements Observer {
         masterController.setGameWindow(this);
 
         // nombre de tentatives + taille de la combinaison
-        tabCombinationLabels = new JLabel[masterController.getAttemptAmount()][masterController.getCombinationPawnAmount()];
-        tabSelectLables = new JButton[masterController.getPawnAmount()];
+        tabCombinationLabels = new colorLabel[masterController.getAttemptAmount()][masterController.getCombinationPawnAmount()];
+        tabSelectLables = new colorButton[masterController.getPawnAmount()];
 
         // Initialisation du panneau de jeu
         JPanel gamePanel = new JPanel(new BorderLayout());
@@ -52,15 +52,17 @@ public class GameWindow extends JFrame implements Observer {
             JPanel colorPanel = new JPanel(new FlowLayout()); // une combinaison
 
             for(int j=0;j<masterController.getCombinationPawnAmount();j++){ // met les combinaisons "à zéro"
-                tabCombinationLabels[i][j] = new JLabel(imageFactory.createImageIcon("img/colors/pink.png", "color pink"));
-                JLabel currentLabel = tabCombinationLabels[i][j];
-                JLabel finalCurrentLabel = currentLabel;
+                tabCombinationLabels[i][j] = new colorLabel(imageFactory.createImageIcon("img/colors/PINK.png", "color pink"));
+                colorLabel currentLabel = tabCombinationLabels[i][j];
+                colorLabel finalCurrentLabel = currentLabel;
                 currentLabel.addMouseListener(new MouseAdapter() {
                     public void mousePressed(MouseEvent me) {
                         System.out.println("Changement couleur");
                         // met à jour l'image
+
                         if(selectedColor!=null){
-                            finalCurrentLabel.setIcon(selectedColor);
+                            ImageFactory imageFactory = new ImageFactory();
+                            finalCurrentLabel.setIcon(imageFactory.createImageColor(selectedColor));
                         }
                     }
                 });
@@ -70,23 +72,24 @@ public class GameWindow extends JFrame implements Observer {
         }
         JPanel selectPanel = new JPanel(new FlowLayout()); // panel de selection des couleurs (joueur)
 
-        String[] allColors = masterController.getAllColors(); // obtient toutes les couleurs sous forme de string
+        Model.Color[] allColors = masterController.getAllColors(); // obtient toutes les couleurs sous forme de string
 
         for(int j=0;j<masterController.getPawnAmount();j++){ // met l'ensemble des couleurs disponible
             //JLabel currentLabel = new JLabel(imageFactory.createImageIcon("img/colors/"+allColors[j]+".png", "color "+allColors[j]));
 
-            JButton currentButton = new JButton(imageFactory.createImageIcon("img/colors/"+allColors[j]+".png", "color "+allColors[j]));
+            colorButton currentButton = new colorButton(imageFactory.createImageIcon("img/colors/"+allColors[j].name()+".png", "color "+allColors[j].name()));
             currentButton.setContentAreaFilled(false);
             currentButton.setBorderPainted(false);
+            currentButton.setColor(allColors[j]);
             currentButton.addActionListener(actionEvent -> {
-                selectColor(currentButton.getIcon());
+                selectedColor = currentButton.getButtonColor();
             });
             /*
             currentLabel.addMouseListener(new MouseAdapter() {
                 public void mousePressed(MouseEvent me) {
                     System.out.println("Changement couleur");
                     // met à jour l'image
-                    currentLabel.setIcon(imageFactory.createImageIcon("img/colors/pink.png", "color pink"));
+                    currentLabel.setIcon(imageFactory.createImageIcon("img/colors/PINK.png", "color pink"));
                     currentLabel.getIcon();// utilise pour mettre dans la case clickable, trouver un moyen d'obtenir la couleur
                 }
             });
@@ -111,8 +114,8 @@ public class GameWindow extends JFrame implements Observer {
 
         add(gamePanel);
     }
-    public void selectColor(Icon icon){
-        this.selectedColor = icon;
+    public void selectColor(Model.Color color){
+        this.selectedColor = color;
     }
     @Override
     public void update() {
