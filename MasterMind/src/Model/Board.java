@@ -62,7 +62,7 @@ public class Board {
     public void setSettings(Settings settings) { this.settings = settings; }
 
     public void addScore(int score){ this.player.addScore(score); notifyObservers();}
-    /*
+
     public void askCombination(){ // demande combination au joueur
         Scanner myObj = new Scanner(System.in);  // Create a Scanner object
         Combination playerCombination = new Combination();
@@ -76,33 +76,16 @@ public class Board {
         this.player.setCombination(playerCombination);
     }
     public Color whatColor(String colorString){ // traduction foireuse du string à l'enum
-        Color color = Color.WHITE;              // à migrer vers MasterUtils
-        switch (colorString){
-            case"RED":
-                color = Color.RED;
-                break;
-            case"GREEN":
-                color = Color.GREEN;
-                break;
-            case"BLUE":
-                color = Color.BLUE;
-                break;
-            case"YELLOW":
-                color = Color.YELLOW;
-                break;
-            case"ORANGE":
-                color = Color.ORANGE;
-                break;
-            case"BLACK":
-                color = Color.BLACK;
-                break;
-            case"WHITE":
-                break;
-            default:
-                break;
+        Color color = Color.BLACK;              // à migrer vers MasterUtils
+        Color[]colors=Color.values();
+        for(int i=0;i<colors.length;i++){
+            if(colorString.compareTo(colors[i].name())==0){
+                color = colors[i];
+                i = colors.length+1;
+            }
         }
         return color;
-    }*/
+    }
 
     public Boolean wantToPlay(){ // pour le joueur, sera probablement manipulé par le controller plus tard
         Boolean reply = false;

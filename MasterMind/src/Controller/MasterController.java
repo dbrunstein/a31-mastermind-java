@@ -2,6 +2,8 @@ package Controller;
 import Model.*;
 import View.*;
 
+import javax.swing.*;
+
 
 public class MasterController {
 

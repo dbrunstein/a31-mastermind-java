@@ -13,7 +13,6 @@ public class Round {
         this.game = game;
         this.secretCombination.createCombination(this.game.getCombinationPawnAmount()); //crée la combinaison
         this.localScore = 0;
-
         this.attemptsLeft = this.game.getAttemptAmount();
     }
     public void playOneAttempt(){
