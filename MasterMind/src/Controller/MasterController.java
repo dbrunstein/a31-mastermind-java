@@ -7,6 +7,8 @@ public class MasterController {
 
     Board board;
     GameWindow gameWindow;
+
+
     public MasterController(Board board) {
         this.board = board;
     }
@@ -39,6 +41,7 @@ public class MasterController {
     public void setGameWindow(GameWindow gameWindow) {this.gameWindow = gameWindow; }
     public void addObserver(GameWindow gameWindow) { board.addObserver(gameWindow); }
     public void removeObserver(GameWindow gameWindow) { board.removeObserver(gameWindow); }
-    public void setSettings(Settings settings) { board.setSettings(settings); }
-
+    public void setSettings(Settings settings) {
+        board.setSettings(settings);
+        System.out.println("les settings on bel et bien changés");}
 }

@@ -101,9 +101,7 @@ public class GameWindow extends JFrame implements Observer {
         int updatedRound = masterController.getRoundAmount();
         roundLabel.setText("Round: " + updatedRound);
 
-
         /*liste de choses que la fenetre devra update :
-
 
         - le nombre de manches restantes
         - le nombre de pions juste et mal placés

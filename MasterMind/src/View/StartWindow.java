@@ -64,7 +64,10 @@ public class StartWindow extends JFrame {
         setVisible(true);
 
         btnSettings.addActionListener(actionEvent -> {
-            // Cache les panneaux et boutons actuels
+
+            //Lance la settings window
+            SettingsWindow settingsWindow = new SettingsWindow(masterController);
+            /*// Cache les panneaux et boutons actuels
             sidepanel.setVisible(false);
             btnPanel.setVisible(false);
             btnSettings.setVisible(false);
@@ -93,7 +96,7 @@ public class StartWindow extends JFrame {
                 btnBack.setVisible(false);
                 btnConfirm.setVisible(false);
             });
-            settingsPanel.setVisible(true);
+            settingsPanel.setVisible(true);*/
         });
     }
 

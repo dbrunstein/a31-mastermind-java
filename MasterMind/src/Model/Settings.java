@@ -57,6 +57,9 @@ public class Settings {
             System.out.println("MAX ATTEMPTS REACHED");
         }
     }
+    public void setDisplayMode(HintDisplayMode displayMode){
+        this.displayMode = displayMode;
+    }
     public int getRoundAmount(){ // nombre de round par game
         return this.roundAmount;
     }
