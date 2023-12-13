@@ -66,37 +66,8 @@ public class StartWindow extends JFrame {
         btnSettings.addActionListener(actionEvent -> {
 
             //Lance la settings window
+            this.dispose();
             SettingsWindow settingsWindow = new SettingsWindow(masterController);
-            /*// Cache les panneaux et boutons actuels
-            sidepanel.setVisible(false);
-            btnPanel.setVisible(false);
-            btnSettings.setVisible(false);
-            image.setVisible(false);
-
-            // Ajout du panneau de paramètres au centre du panneau principal
-            JPanel settingsPanel = new JPanel();
-            settingsPanel.setLayout(new BoxLayout(settingsPanel, BoxLayout.PAGE_AXIS));
-            mainPanel.add(settingsPanel, BorderLayout.CENTER);
-
-            Button btnBack = new Button("Back");
-            Button btnConfirm = new Button("Confirm");
-
-            settingsPanel.add(btnBack);
-            settingsPanel.add(btnConfirm);
-
-            btnBack.addActionListener(actionEvent1 -> {
-                // Affiche à nouveau les panneaux et boutons principaux
-                sidepanel.setVisible(true);
-                btnPanel.setVisible(true);
-                btnSettings.setVisible(true);
-                image.setVisible(true);
-
-                // Masque le panneau de paramètres et les boutons
-                settingsPanel.setVisible(false);
-                btnBack.setVisible(false);
-                btnConfirm.setVisible(false);
-            });
-            settingsPanel.setVisible(true);*/
         });
     }
 
