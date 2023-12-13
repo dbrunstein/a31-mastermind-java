@@ -4,52 +4,30 @@ import java.util.ArrayList;
 
 public class Round {
     private Combination secretCombination;
-    private Game game;
+    //private int attemptAmount;
     private int localScore;
-    private int attemptsLeft;
+    private HintDisplayMode displayMode;
 
     public Round(Game game){
         this.secretCombination = new Combination();
-        this.game = game;
-        this.secretCombination.createCombination(this.game.getCombinationPawnAmount()); //crée la combinaison
+        this.secretCombination.createCombination(game.getCombinationPawnAmount()); //crée la combinaison
         this.localScore = 0;
-
-        this.attemptsLeft = this.game.getAttemptAmount();
+        //this.attemptAmount = game.getAttemptAmount();
+        this.displayMode = game.getDisplayMode();
     }
-    public void playOneAttempt(){
-        if(this.attemptsLeft >0){ // tant qu'il reste des tentatives
-            this.attemptsLeft--;
-            Combination playerCombination = this.game.getPlayerCombination();
+    public Boolean playRound(Combination playerCombination){
+        Boolean hasWon = false;
             this.testCombination(playerCombination);
-            //this.displayHints(); // marche pas jsp pourquoi
-        }
-    }
-    public void playRound(){
-        for(int i=0;i<this.game.getAttemptAmount();i++){ // Il faudra peut-être unifier attemptLeft et le setting
-            System.out.println("Round : "+i);
-            //if(this.game.wantToPlay()){ // sera plus tard géré via controller et view
-                this.game.askCombination(); // obtient la combinaison du joueur
-                this.playOneAttempt();
-                if(this.hasWon()){ // check si il a gagné
-                    this.won();
-                    i=this.game.getAttemptAmount()+1; // break
-                }
-                else{
-                    System.out.println("WRONG");
-                    this.calculateLocalScore();
-                    this.displayHints();
-                }
-            //}
-            //else{
-                System.out.println("Skipping round");
-                this.skipRound();
-            //}
-        }
-    }
-    public void skipRound(){
-        if(this.attemptsLeft >0){ // tant qu'il reste des tentatives
-            this.attemptsLeft--;
-        }
+            if(this.hasWon(playerCombination)){ // check si il a gagné
+                this.won();
+                hasWon = true;
+            }
+            else{
+                System.out.println("WRONG");
+                this.calculateLocalScore();
+                this.displayHints();
+            }
+        return hasWon;
     }
     public int getScore(){
         return this.localScore;
@@ -69,24 +47,10 @@ public class Round {
         this.secretCombination.testCombination(combination); // remplace la liste afin d'éviter d'avoir
     }                                                                         // les hints de la dernière tentative
 
-    public Boolean hasWon(){ // Demande à la combinaison si la combinaison est trouvée
-        Boolean hasWon = this.secretCombination.combinationIsEqual(this.game.getPlayerCombination());
+    public Boolean hasWon(Combination playerCombination){ // Demande à la combinaison si la combinaison est trouvée
+        Boolean hasWon = this.secretCombination.combinationIsEqual(playerCombination);
         return hasWon;
     }
-    /* déprécié, fait la même chose que combinationIsEqual (avec les hints) (initialement abandonnée car hints cassés)
-    public Boolean hasWon(){ // voir pour le refaire dans combination ?
-        Boolean hasWon = false;
-        int nbRight = 0;
-        for(Hint hint : this.secretCombination.getHintsline()){
-            if(hint.getHintColor() && hint.getHintPosition()){ // si la couleur et position sont bonnes
-                nbRight++;
-            }
-        }
-        if(nbRight==this.game.getCombinationPawnAmount()){ // si tt les indices indique que c'est bon
-            hasWon = true; // il gagne
-        }
-        return hasWon;
-    }*/
     public void displayHints(){ // juste du debug
         if(this.secretCombination.getHintsline().size()==0){
             System.out.println("YOU RE SHIT!!!! NO HINTS FOR YOU!!!!");
@@ -96,11 +60,10 @@ public class Round {
         }
     }
     public void won(){
-        if(this.game.getDisplayMode()==HintDisplayMode.CLASSIC){
+        if(this.displayMode==HintDisplayMode.CLASSIC){
             this.localScore+= 4;
         }
         System.out.println("You have won this round!!!! :DDDDDDD");
         System.out.println("This round Score : "+this.localScore);
-        this.attemptsLeft = 0;
     }
 }

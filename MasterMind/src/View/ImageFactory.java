@@ -26,4 +26,7 @@ public class ImageFactory {
         label.setPreferredSize(new Dimension(250, 100));
         return label;
     }
+    public Icon getIcon(){ // renvoie un icon avec l'image contenu dedans
+        return createImageIcon(this.filename,"ZIM");
+    }
 }

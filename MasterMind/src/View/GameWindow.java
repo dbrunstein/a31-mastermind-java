@@ -11,8 +11,9 @@ import java.nio.channels.Channel;
 
 public class GameWindow extends JFrame implements Observer {
     private JLabel scoreLabel; // contient le score
-    private JLabel[] tabSelectLables; // contient les labels de selection du joueur
+    private JButton[] tabSelectLables; // contient les labels de selection du joueur
     private JLabel[][] tabCombinationLabels; // contient les labels des combinaisons affichées
+    private Icon selectedColor;
     private JLabel roundLabel;
     private MasterController masterController;
 
@@ -31,7 +32,7 @@ public class GameWindow extends JFrame implements Observer {
 
         // nombre de tentatives + taille de la combinaison
         tabCombinationLabels = new JLabel[masterController.getAttemptAmount()][masterController.getCombinationPawnAmount()];
-        tabSelectLables = new JLabel[masterController.getPawnAmount()];
+        tabSelectLables = new JButton[masterController.getPawnAmount()];
 
         // Initialisation du panneau de jeu
         JPanel gamePanel = new JPanel(new BorderLayout());
@@ -51,6 +52,18 @@ public class GameWindow extends JFrame implements Observer {
 
             for(int j=0;j<masterController.getCombinationPawnAmount();j++){ // met les combinaisons "à zéro"
                 tabCombinationLabels[i][j] = new JLabel(imageFactory.createImageIcon("img/colors/pink.png", "color pink"));
+                JLabel currentLabel = tabCombinationLabels[i][j];
+                JLabel finalCurrentLabel = currentLabel;
+                currentLabel.addMouseListener(new MouseAdapter() {
+                    public void mousePressed(MouseEvent me) {
+                        System.out.println("Changement couleur");
+                        // met à jour l'image
+                        if(selectedColor!=null){
+                            finalCurrentLabel.setIcon(selectedColor);
+                        }
+                    }
+                });
+
 
                 colorPanel.add(tabCombinationLabels[i][j]);
             }
@@ -61,8 +74,13 @@ public class GameWindow extends JFrame implements Observer {
         String[] allColors = masterController.getAllColors(); // obtient toutes les couleurs sous forme de string
 
         for(int j=0;j<masterController.getPawnAmount();j++){ // met l'ensemble des couleurs disponible
-            JLabel currentLabel = new JLabel(imageFactory.createImageIcon("img/colors/"+allColors[j]+".png", "color "+allColors[j]));
+            //JLabel currentLabel = new JLabel(imageFactory.createImageIcon("img/colors/"+allColors[j]+".png", "color "+allColors[j]));
 
+            JButton currentButton = new JButton(imageFactory.createImageIcon("img/colors/"+allColors[j]+".png", "color "+allColors[j]));
+            currentButton.addActionListener(actionEvent -> {
+                selectColor(currentButton.getIcon());
+            });
+            /*
             currentLabel.addMouseListener(new MouseAdapter() {
                 public void mousePressed(MouseEvent me) {
                     System.out.println("Changement couleur");
@@ -71,7 +89,8 @@ public class GameWindow extends JFrame implements Observer {
                     currentLabel.getIcon();// utilise pour mettre dans la case clickable, trouver un moyen d'obtenir la couleur
                 }
             });
-            tabSelectLables[j] = currentLabel;
+            */
+            tabSelectLables[j] = currentButton;
             selectPanel.add(tabSelectLables[j]);
         }
 
@@ -91,7 +110,9 @@ public class GameWindow extends JFrame implements Observer {
 
         add(gamePanel);
     }
-
+    public void selectColor(Icon icon){
+        this.selectedColor = icon;
+    }
     @Override
     public void update() {
         // Mise à jour du score affiché à chaque notification
