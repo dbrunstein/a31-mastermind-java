@@ -15,10 +15,6 @@ package MasterMind{
         }
         package Model {
 class Board {
-    - game: Game
-    - player: Player
-    - settings: Settings
-    - observers: ArrayList<Observer>
 
     + Board(player: Player)
     + addObserver(observer: Observer)
@@ -43,7 +39,6 @@ class Settings {
     - pawnAmount: int
     - combinationPawnAmount: int
     - attemptAmount: int
-    - displayMode: HintDisplayMode
 
     + Settings()
     + setRoundAmount(roundAmount: int)
@@ -58,8 +53,6 @@ class Settings {
 }
 
 class Game {
-    - roundList: ArrayList<Round>
-    - board: Board
 
     + Game(board: Board)
     + setBoard(board: Board)
@@ -77,17 +70,9 @@ class Game {
 }
 
 class Round {
-    - secretCombination: Combination
-    - int
     - localScore: int
-    - attemptsLeft: int
-
     + Round(game: Game)
-    + setBoard(board: Board)
-    + setRoundList()
-    + playOneAttempt()
     + playRound()
-    + skipRound()
     + getScore(): int
     + calculateLocalScore()
     + testCombination(combination: Combination)
@@ -98,8 +83,7 @@ class Round {
 
 class Player {
     - score: int
-    - combination: Combination
-    - CONST_NAME: String
+    - NAME: String
     - name: String
 
     + Player()
@@ -111,7 +95,6 @@ class Player {
 }
 
 class Combination {
-
     + Combination()
     + createCombination(nbPawn: int)
     + getSize(): int
@@ -127,8 +110,6 @@ class Combination {
 }
 
 class Hint {
-    - type: HintType
-
     + Hint()
     + Hint(type: hintType)
     + setHint(type: hintType)
@@ -139,7 +120,6 @@ enum HintType {
     KNOWN_POSITION
 }
 class Pawn {
-    - pawnColor: Color
     + Pawn()
     + setPawnColor(pawnColor: Color)
     + Pawn(color: Color)
@@ -184,21 +164,22 @@ StartWindow ...|> Observer
 EndGameWindow ...|> Observer
 '####MODEL####'
 Combination  *---> "* -pawnList" Pawn : > possède
-Pawn  *-> "1"Color : > possède
-Game  *--> "*"Round : > est un ensemble de
-Board  o--> "*"Observer : < observe
-Round *--> Combination : > possède (secret)
-Board  *---> "1" Game : > possède
-Board  *-> "1"Settings
-Settings  *--> "1"HintDisplayMode
-Board  *--> "1"Player : > possède information joueur
+Pawn  *-> "1 - pawnColor"Color : > possède
+Game  *--> "* - roundList:"Round : > est un ensemble de
+Board  o--> "* - observers"Observer : < observe
+Round *--> "1 - secretCombination"Combination : > possède (secret)
+Board  *-> "1 - settings"Settings
+Board  *---> "1 - game" Game : > possède
+Settings  *--> "1 - displayMode:"HintDisplayMode
+Board  *--> "1 - player"Player : > possède information joueur
 Combination  o--> "*"Hint : connait
-Hint  *--> "1" HintType
+Hint  *--> "1 - type" HintType
 Combination ...> HintType : <<uses>>
 Round ...> HintType : <<uses>>
 MasterController ...> Color : <<uses>>
 Game ...> HintDisplayMode : <<uses>>
-Game  o--> "1" Board
+Game  o--> "1 - board" Board
+Player o--> "1 - combination" Combination
 'retirer les arg non primitif + ajout si privé dans agregats et compo'
 '####CONTROLLER####'
 MasterController ...> Board : > manipule
