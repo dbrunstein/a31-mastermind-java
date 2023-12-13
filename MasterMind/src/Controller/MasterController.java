@@ -45,5 +45,5 @@ public class MasterController {
     public void removeObserver(GameWindow gameWindow) { board.removeObserver(gameWindow); }
     public void setSettings(Settings settings) {
         board.setSettings(settings);
-        System.out.println("les settings on bel et bien changés");}
+        System.out.println("test 2");}
 }
