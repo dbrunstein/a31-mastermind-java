@@ -4,6 +4,7 @@ import Controller.MasterController;
 import Model.Observer;
 
 import javax.swing.*;
+import javax.swing.border.LineBorder;
 import java.awt.*;
 import java.awt.event.MouseAdapter;
 import java.awt.event.MouseEvent;
@@ -63,8 +64,6 @@ public class GameWindow extends JFrame implements Observer {
                         }
                     }
                 });
-
-
                 colorPanel.add(tabCombinationLabels[i][j]);
             }
             combinationsPanel.add(colorPanel);
@@ -77,6 +76,8 @@ public class GameWindow extends JFrame implements Observer {
             //JLabel currentLabel = new JLabel(imageFactory.createImageIcon("img/colors/"+allColors[j]+".png", "color "+allColors[j]));
 
             JButton currentButton = new JButton(imageFactory.createImageIcon("img/colors/"+allColors[j]+".png", "color "+allColors[j]));
+            currentButton.setContentAreaFilled(false);
+            currentButton.setBorderPainted(false);
             currentButton.addActionListener(actionEvent -> {
                 selectColor(currentButton.getIcon());
             });
