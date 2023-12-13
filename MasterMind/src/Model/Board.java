@@ -59,8 +59,9 @@ public class Board {
     public Settings getSettings(){ return this.settings; }
 
     // SETTERS
-    public void setSettings(Settings settings) { this.settings = settings;
-        System.out.println("test");}
+    public void setSettings(Settings settings) {
+        this.settings = settings;
+        System.out.println("test 1");}
 
     public void addScore(int score){ this.player.addScore(score); notifyObservers();}
 
