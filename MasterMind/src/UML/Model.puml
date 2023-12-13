@@ -1,0 +1,167 @@
+@startuml
+class Board {
+    - game: Game
+    - player: Player
+    - settings: Settings
+    - observers: ArrayList<Observer>
+
+    + Board(player: Player)
+    + addObserver(observer: Observer): void
+    + removeObserver(observer: Observer): void
+    + notifyObservers(): void
+    + startNewGame(): void
+    + getScore(): int
+    + getRoundAmount(): int
+    + getPawnAmount(): int
+    + getCombinationPawnAmount(): int
+    + getAttemptAmount(): int
+    + getDisplayMode(): HintDisplayMode
+    + getPlayerCombination(): Combination
+    + getSettings(): Settings
+    + setSettings(settings: Settings): void
+    + addScore(score: int): void
+    + wantToPlay(): Boolean
+}
+
+class Settings {
+    - roundAmount: int
+    - pawnAmount: int
+    - combinationPawnAmount: int
+    - attemptAmount: int
+    - displayMode: HintDisplayMode
+
+    + Settings()
+    + setRoundAmount(roundAmount: int): void
+    + setPawnAmount(pawnAmount: int): void
+    + setCombinationPawnAmount(combinationPawnAmount: int): void
+    + setAttemptAmount(attemptAmount: int): void
+    + getRoundAmount(): int
+    + getPawnAmount(): int
+    + getCombinationPawnAmount(): int
+    + getAttemptAmount(): int
+    + getDisplayMode(): HintDisplayMode
+}
+
+class Game {
+    - roundList: ArrayList<Round>
+    - board: Board
+
+    + Game(board: Board)
+    + setBoard(board: Board): void
+    + setRoundList(): void
+    + play(): void
+    + getRoundAmount(): int
+    + getPawnAmount(): int
+    + getCombinationPawnAmount(): int
+    + getAttemptAmount(): int
+    + getDisplayMode(): HintDisplayMode
+    + wantToPlay(): Boolean
+    + askCombination(): void
+    + getPlayerCombination(): Combination
+    + addScore(score: int): void
+}
+
+class Round {
+    - secretCombination: Combination
+    - game: Game
+    - localScore: int
+    - attemptsLeft: int
+
+    + Round(game: Game)
+    + setBoard(board: Board): void
+    + setRoundList(): void
+    + playOneAttempt(): void
+    + playRound(): void
+    + skipRound(): void
+    + getScore(): int
+    + calculateLocalScore(): void
+    + testCombination(combination: Combination): void
+    + hasWon(): Boolean
+    + displayHints(): void
+    + won(): void
+}
+
+class Player {
+    - score: int
+    - combination: Combination
+    - CONST_NAME: String
+    - name: String
+
+    + Player()
+    + Player(name: String)
+    + setCombination(combination: Combination): void
+    + addScore(score: int): void
+    + getCombination(): Combination
+    + getScore(): int
+}
+
+class Combination {
+    - pawnList: ArrayList<Pawn>
+    - hintsline: ArrayList<Hint>
+
+    + Combination()
+    + createCombination(nbPawn: int): void
+    + getSize(): int
+    + getCombination(): ArrayList<Pawn>
+    + setCombination(pawnList: ArrayList<Pawn>): void
+    + getHintsline(): ArrayList<Hint>
+    + displayCombination(): void
+    + testCombination(combination: Combination): void
+    + combinationIsEqual(combination: Combination): Boolean
+    + positionIsKnown(pawn: Pawn, index: int): Boolean
+    + containsColor(pawn: Pawn): Boolean
+    + comparePawn(pawnOne: Pawn, pawnTwo: Pawn): Boolean
+}
+
+class Hint {
+    - rightColor: Boolean
+    - knownPosition: Boolean
+
+    + Hint()
+    + Hint(rightColor: Boolean)
+    + Hint(rightColor: Boolean, knownPosition: Boolean)
+    + setHint(rightColor: Boolean, knownPosition: Boolean): void
+    + getHintPosition(): Boolean
+    + getHintColor(): Boolean
+}
+
+class Pawn {
+    - pawnColor: Color
+
+    + Pawn()
+    + setPawnColor(pawnColor: Color): void
+    + Pawn(color: Color)
+    + getPawnColor(): Color
+}
+
+enum Color {
+    RED,
+    GREEN,
+    BLUE,
+    YELLOW,
+    ORANGE,
+    BLACK,
+    VIOLET,
+    BROWN
+}
+
+enum HintDisplayMode {
+    EASY,
+    CLASSIC,
+    NUMERICAL
+}
+
+interface Observer {
+    update(): void
+}
+
+Board *-down- Settings
+Board *-up-> Game
+Game *-up- Round
+Game *-down-> Board
+Round *-up-> Combination
+Round *-down-> Game
+Player *-down-> Combination
+Combination *-up-> Pawn
+Combination *-up-> Hint
+@enduml

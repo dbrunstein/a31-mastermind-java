@@ -178,14 +178,10 @@ interface Observer {
 }
 'Base pas ouf mais c'est un début'
 '####VUES####'
-StartWindow  *--> "1" MasterController
 GameWindow  *--> "1" MasterController
-EndGameWindow  *--> "1" MasterController
-
-GameWindow o--> "*"Observer : < agit sur
-StartWindow o--> "*"Observer : < agit sur
-EndGameWindow o--> "*"Observer : < agit sur
-
+GameWindow ...|> Observer
+StartWindow ...|> Observer
+EndGameWindow ...|> Observer
 '####MODEL####'
 Combination  *---> "* -pawnList" Pawn : > possède
 Pawn  *-> "1"Color : > possède
@@ -203,7 +199,6 @@ Round ...> HintType : <<uses>>
 MasterController ...> Color : <<uses>>
 Game ...> HintDisplayMode : <<uses>>
 Game  o--> "1" Board
-Player *--> Combination : > Possède
 'retirer les arg non primitif + ajout si privé dans agregats et compo'
 '####CONTROLLER####'
 MasterController ...> Board : > manipule
