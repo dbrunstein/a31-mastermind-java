@@ -172,7 +172,7 @@ Board  *-> "1 - settings"Settings
 Board  *---> "1 - game" Game : > possède
 Settings  *--> "1 - displayMode:"HintDisplayMode
 Board  *--> "1 - player"Player : > possède information joueur
-Combination  o--> "*"Hint : connait
+Combination  o--> "* - hintsline"Hint : connait
 Hint  *--> "1 - type" HintType
 Combination ...> HintType : <<uses>>
 Round ...> HintType : <<uses>>
