@@ -1,0 +1,207 @@
+@startuml
+'https://plantuml.com/class-diagram
+skinparam style strictuml
+skinparam classAttributeIconSize 0
+skinparam classFontStyle Bold
+hide enum methods
+hide interface attributes
+
+package MasterMind{
+    class MasterMindApp{
+    }
+        package Controller{
+            class MasterController{
+            }
+        }
+        package Model {
+class Board {
+    - game: Game
+    - player: Player
+    - settings: Settings
+    - observers: ArrayList<Observer>
+
+    + Board(player: Player)
+    + addObserver(observer: Observer)
+    + removeObserver(observer: Observer)
+    + notifyObservers()
+    + startNewGame()
+    + getScore(): int
+    + getRoundAmount(): int
+    + getPawnAmount(): int
+    + getCombinationPawnAmount(): int
+    + getAttemptAmount(): int
+    + getDisplayMode(): HintDisplayMode
+    + getPlayerCombination(): Combination
+    + getSettings(): Settings
+    + setSettings(settings: Settings)
+    + addScore(score: int)
+    + wantToPlay(): Boolean
+}
+
+class Settings {
+    - roundAmount: int
+    - pawnAmount: int
+    - combinationPawnAmount: int
+    - attemptAmount: int
+    - displayMode: HintDisplayMode
+
+    + Settings()
+    + setRoundAmount(roundAmount: int)
+    + setPawnAmount(pawnAmount: int)
+    + setCombinationPawnAmount(combinationPawnAmount: int)
+    + setAttemptAmount(attemptAmount: int)
+    + getRoundAmount(): int
+    + getPawnAmount(): int
+    + getCombinationPawnAmount(): int
+    + getAttemptAmount(): int
+    + getDisplayMode(): HintDisplayMode
+}
+
+class Game {
+    - roundList: ArrayList<Round>
+    - board: Board
+
+    + Game(board: Board)
+    + setBoard(board: Board)
+    + setRoundList()
+    + play()
+    + getRoundAmount(): int
+    + getPawnAmount(): int
+    + getCombinationPawnAmount(): int
+    + getAttemptAmount(): int
+    + getDisplayMode(): HintDisplayMode
+    + wantToPlay(): Boolean
+    + askCombination()
+    + getPlayerCombination(): Combination
+    + addScore(score: int)
+}
+
+class Round {
+    - secretCombination: Combination
+    - int
+    - localScore: int
+    - attemptsLeft: int
+
+    + Round(game: Game)
+    + setBoard(board: Board)
+    + setRoundList()
+    + playOneAttempt()
+    + playRound()
+    + skipRound()
+    + getScore(): int
+    + calculateLocalScore()
+    + testCombination(combination: Combination)
+    + hasWon(): Boolean
+    + displayHints()
+    + won()
+}
+
+class Player {
+    - score: int
+    - combination: Combination
+    - CONST_NAME: String
+    - name: String
+
+    + Player()
+    + Player(name: String)
+    + setCombination(combination: Combination)
+    + addScore(score: int)
+    + getCombination(): Combination
+    + getScore(): int
+}
+
+class Combination {
+
+    + Combination()
+    + createCombination(nbPawn: int)
+    + getSize(): int
+    + getCombination(): ArrayList<Pawn>
+    + setCombination(pawnList: ArrayList<Pawn>)
+    + getHintsline(): ArrayList<Hint>
+    + displayCombination()
+    + testCombination(combination: Combination)
+    + combinationIsEqual(combination: Combination): Boolean
+    + positionIsKnown(pawn: Pawn, index: int): Boolean
+    + containsColor(pawn: Pawn): Boolean
+    + comparePawn(pawnOne: Pawn, pawnTwo: Pawn): Boolean
+}
+
+class Hint {
+    - type: HintType
+
+    + Hint()
+    + Hint(type: hintType)
+    + setHint(type: hintType)
+    + getHintType(): HintType
+}
+enum HintType {
+    KNOWN_COLOR,
+    KNOWN_POSITION
+}
+class Pawn {
+    - pawnColor: Color
+    + Pawn()
+    + setPawnColor(pawnColor: Color)
+    + Pawn(color: Color)
+    + getPawnColor(): Color
+}
+
+enum Color {
+    RED,
+    GREEN,
+    BLUE,
+    YELLOW,
+    ORANGE,
+    BLACK,
+    VIOLET,
+    BROWN
+}
+
+enum HintDisplayMode {
+    EASY,
+    CLASSIC,
+    NUMERICAL
+}
+
+interface Observer {
+    update()
+}
+        }
+        package View {
+            class GameWindow {
+            }
+            class StartWindow{
+            }
+            class EndGameWindow{
+            }
+        }
+}
+'Base pas ouf mais c'est un début'
+'####VUES####'
+GameWindow  *--> "1" MasterController
+GameWindow ...|> Observer
+StartWindow ...|> Observer
+EndGameWindow ...|> Observer
+'####MODEL####'
+Combination  *---> "* -pawnList" Pawn : > possède
+Pawn  *-> "1"Color : > possède
+Game  *--> "*"Round : > est un ensemble de
+Board  o--> "*"Observer : < observe
+Round *--> Combination : > possède (secret)
+Board  *---> "1" Game : > possède
+Board  *-> "1"Settings
+Settings  *--> "1"HintDisplayMode
+Board  *--> "1"Player : > possède information joueur
+Combination  o--> "*"Hint : connait
+Hint  *--> "1" HintType
+Combination ...> HintType : <<uses>>
+Round ...> HintType : <<uses>>
+MasterController ...> Color : <<uses>>
+Game ...> HintDisplayMode : <<uses>>
+Game  o--> "1" Board
+'retirer les arg non primitif + ajout si privé dans agregats et compo'
+'####CONTROLLER####'
+MasterController ...> Board : > manipule
+'####MAIN####'
+MasterMindApp ...> Board : <<uses>>
+@enduml

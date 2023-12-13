@@ -22,8 +22,12 @@ public class Game {
     }
     public void play(){ // joue une partie
         for(Round round : this.roundList){ // joue chaque manche
-            round.playRound();
-            this.board.addScore(round.getScore()); // ajoute le score de la manche
+            for(int i=0;i<this.getAttemptAmount();i++){
+                if(round.playRound(this.getPlayerCombination())){ // si round gagné
+                    this.board.addScore(round.getScore()); // ajoute le score de la manche
+                    i= this.getAttemptAmount()+1;
+                }
+            }
         }
     }
     //// GET-VALEUR OPTIONS
