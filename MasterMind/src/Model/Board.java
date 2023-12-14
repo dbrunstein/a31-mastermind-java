@@ -24,7 +24,7 @@ public class Board {
     }
     private void notifyObservers() {
         for (Observer observer : observers) {
-            observer.update(); // ou une méthode spécifique d'update selon le besoin
+            observer.update(getScore(), getRoundAmount(), getAttemptAmount()); // ou une méthode spécifique d'update selon le besoin
         }
     }
 

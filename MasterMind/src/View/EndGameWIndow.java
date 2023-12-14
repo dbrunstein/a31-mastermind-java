@@ -12,7 +12,7 @@ public class EndGameWIndow extends JFrame implements Observer {
 
     }
     @Override
-    public void update() {
+    public void update(int score, int round, int attempt) {
 
     }
 }

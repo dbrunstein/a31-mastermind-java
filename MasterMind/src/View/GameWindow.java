@@ -6,19 +6,18 @@ import Model.Observer;
 import javax.sound.sampled.LineUnavailableException;
 import javax.sound.sampled.UnsupportedAudioFileException;
 import javax.swing.*;
-import javax.swing.border.LineBorder;
 import java.awt.*;
 import java.awt.event.MouseAdapter;
 import java.awt.event.MouseEvent;
 import java.io.IOException;
-import java.nio.channels.Channel;
 
 public class GameWindow extends JFrame implements Observer {
     private JLabel scoreLabel; // contient le score
-    private colorButton[] tabSelectLables; // contient les labels de selection du joueur
+    private colorButton[] tabSelectLabels; // contient les labels de selection du joueur
     private colorLabel[][] tabCombinationLabels; // contient les labels des combinaisons affichées
     private Model.Color selectedColor;
     private JLabel roundLabel;
+    private int currentAttempt;
     private MasterController masterController;
 
 
@@ -36,8 +35,9 @@ public class GameWindow extends JFrame implements Observer {
 
         // nombre de tentatives + taille de la combinaison
         tabCombinationLabels = new colorLabel[masterController.getAttemptAmount()][masterController.getCombinationPawnAmount()];
-        tabSelectLables = new colorButton[masterController.getPawnAmount()];
+        tabSelectLabels = new colorButton[masterController.getPawnAmount()];
 
+        currentAttempt = 0; // faire un update dessus
         // Initialisation du panneau de jeu
         JPanel gamePanel = new JPanel(new BorderLayout());
 
@@ -55,17 +55,20 @@ public class GameWindow extends JFrame implements Observer {
             JPanel colorPanel = new JPanel(new FlowLayout()); // une combinaison
 
             for(int j=0;j<masterController.getCombinationPawnAmount();j++){ // met les combinaisons "à zéro"
-                tabCombinationLabels[i][j] = new colorLabel(imageFactory.createImageIcon("img/colors/PINK.png", "color pink"));
+                int[] position = {i,j};// i attempt, j position dans la combinaison
+                tabCombinationLabels[i][j] = new colorLabel(imageFactory.createImageIcon("img/colors/PINK.png", "color pink"),position);
                 colorLabel currentLabel = tabCombinationLabels[i][j];
                 colorLabel finalCurrentLabel = currentLabel;
                 currentLabel.addMouseListener(new MouseAdapter() {
                     public void mousePressed(MouseEvent me) {
                         System.out.println("Changement couleur");
                         // met à jour l'image
-
-                        if(selectedColor!=null){
+                        int attemptNb = masterController.getAttemptAmount() - finalCurrentLabel.getPosition()[0] -1; // -1 car va de 0 à n
+                        System.out.println(attemptNb);
+                        if(selectedColor!=null && attemptNb==currentAttempt){ // s'exécute si c'est la tentative actuelle
                             ImageFactory imageFactory = new ImageFactory();
                             finalCurrentLabel.setIcon(imageFactory.createImageColor(selectedColor));
+                            System.out.println(finalCurrentLabel.getPosition()[1]);// affiche la position dans la combi
                         }
                     }
                 });
@@ -107,8 +110,8 @@ public class GameWindow extends JFrame implements Observer {
                 }
             });
             */
-            tabSelectLables[j] = currentButton;
-            selectPanel.add(tabSelectLables[j]);
+            tabSelectLabels[j] = currentButton;
+            selectPanel.add(tabSelectLabels[j]);
         }
 
         selectPanel.setBackground(Color.lightGray);
@@ -131,14 +134,15 @@ public class GameWindow extends JFrame implements Observer {
         this.selectedColor = color;
     }
     @Override
-    public void update() {
+    public void update(int score, int round, int attempt) {
         // Mise à jour du score affiché à chaque notification
-        int updatedScore = masterController.getScore();
+        int updatedScore = score;//masterController.getScore();
         scoreLabel.setText("Score: " + updatedScore);
 
-        int updatedRound = masterController.getRoundAmount();
+        int updatedRound = round;//masterController.getRoundAmount();
         roundLabel.setText("Round: " + updatedRound);
 
+        currentAttempt = attempt;
         /*liste de choses que la fenetre devra update :
 
         - le nombre de manches restantes
