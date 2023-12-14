@@ -23,7 +23,8 @@ public class Game {
     public void play(){ // joue une partie
         for(Round round : this.roundList){ // joue chaque manche
             for(int i=0;i<this.getAttemptAmount();i++){
-                if(round.playRound(this.getPlayerCombination())){ // si round gagné
+                while(this.getPlayerCombination()==null){} // attend le submit du joueur (éclaté pour test)
+                if(round.playRound(this.popPlayerCombination())){ // si round gagné
                     this.board.addScore(round.getScore()); // ajoute le score de la manche
                     i= this.getAttemptAmount()+1;
                 }
@@ -56,6 +57,9 @@ public class Game {
     }
     public Combination getPlayerCombination(){
         return this.board.getPlayerCombination();
+    }
+    public Combination popPlayerCombination(){
+        return this.board.popPlayerCombination();
     }
     public void addScore(int score){
         this.board.addScore(score);

@@ -13,7 +13,7 @@ import java.io.IOException;
 
 public class GameWindow extends JFrame implements Observer {
     private JLabel scoreLabel; // contient le score
-    private colorButton[] tabSelectLabels; // contient les labels de selection du joueur
+    private colorButton[] tabSelectLabels; // contient les labels de selection du joueur <--- probablement inutile
     private colorLabel[][] tabCombinationLabels; // contient les labels des combinaisons affichées
     private Model.Color selectedColor;
     private JLabel roundLabel;
@@ -68,6 +68,10 @@ public class GameWindow extends JFrame implements Observer {
                         if(selectedColor!=null && attemptNb==currentAttempt){ // s'exécute si c'est la tentative actuelle
                             ImageFactory imageFactory = new ImageFactory();
                             finalCurrentLabel.setIcon(imageFactory.createImageColor(selectedColor));
+                            finalCurrentLabel.setColor(selectedColor);
+                            //updateColor(finalCurrentLabel.getPosition());
+                            // debug
+                            System.out.println(finalCurrentLabel.getLabelColor());
                             System.out.println(finalCurrentLabel.getPosition()[1]);// affiche la position dans la combi
                         }
                     }
@@ -119,12 +123,35 @@ public class GameWindow extends JFrame implements Observer {
         mainPanel.add(combinationsPanel,BorderLayout.CENTER);
         mainPanel.add(selectPanel,BorderLayout.SOUTH);
 
+        /*
         Button btnAddScore = new Button("Add");
         btnAddScore.addActionListener(actionEvent -> {
             masterController.addScore(1);
         });
 
         gamePanel.add(btnAddScore, BorderLayout.SOUTH);
+
+         */
+
+
+        // Partie du controller joueur
+        JPanel playerControl = new JPanel(new GridLayout(0,3)); // affichage des combinaisons
+        Button btnSkip = new Button("Skip");
+        Button btnSubmit = new Button("Submit");
+        Button btnQuit = new Button("Quit");
+
+        btnQuit.addActionListener(actionEvent -> {
+            StartWindow startWindow = new StartWindow(masterController);
+            this.dispose();
+        }); // Ferme la fenêtre
+
+        btnSubmit.addActionListener(actionEvent -> {
+            sendCombination();
+        });
+        playerControl.add(btnSkip);
+        playerControl.add(btnSubmit);
+        playerControl.add(btnQuit);
+        gamePanel.add(playerControl, BorderLayout.SOUTH);
         gamePanel.add(mainPanel,BorderLayout.CENTER);
 
 
@@ -132,6 +159,20 @@ public class GameWindow extends JFrame implements Observer {
     }
     public void selectColor(Model.Color color){
         this.selectedColor = color;
+    }
+    /* inutile, je croyais que les labels se mettaient pas à jour, car final
+    public void updateColor(int[] position){
+        tabCombinationLabels[position[0]][position[1]].setColor(selectedColor);
+    }*/
+    public void sendCombination(){ // envoie la combinaison au board via controller
+        String[] combination = new String[tabCombinationLabels[currentAttempt].length];
+        // vu que les labels vont de haut en bas, nécessité d'inversé, -1 pour rester dans l'index (0-n)
+        int n = masterController.getAttemptAmount()-currentAttempt-1;
+        for(int i=0;i<tabCombinationLabels[n].length;i++){
+            System.out.println(tabCombinationLabels[n][i].getLabelColor());
+            combination[i] = tabCombinationLabels[n][i].getLabelColor().name();
+        }
+        masterController.setPlayerCombination(combination);
     }
     @Override
     public void update(int score, int round, int attempt) {

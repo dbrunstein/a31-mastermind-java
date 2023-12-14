@@ -56,13 +56,19 @@ public class Board {
     public Combination getPlayerCombination(){
         return this.player.getCombination();
     }
+    public Combination popPlayerCombination(){
+        return this.player.popCombination();
+    }
+    public void setPlayerCombination(String[] combination){ // envoie la combinaison sous string au player
+        this.player.sendCombination(combination);
+    }
     public Settings getSettings(){ return this.settings; }
 
     // SETTERS
     public void setSettings(Settings settings) {
         this.settings = settings;
         System.out.println("test 1");}
-
+    // Peut-être changer en fonction fourre-tout pour update les vues ?
     public void addScore(int score){ this.player.addScore(score); notifyObservers();}
 
     public void askCombination(){ // demande combination au joueur

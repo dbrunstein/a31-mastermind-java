@@ -46,6 +46,7 @@ public class MasterController {
     public void setGameWindow(GameWindow gameWindow) {this.gameWindow = gameWindow; }
     public void addObserver(GameWindow gameWindow) { board.addObserver(gameWindow); }
     public void removeObserver(GameWindow gameWindow) { board.removeObserver(gameWindow); }
+    public void setPlayerCombination(String[] combination){this.board.setPlayerCombination(combination);}
     public void setSettings(Settings settings) {
         board.setSettings(settings);
         System.out.println("test 2");}

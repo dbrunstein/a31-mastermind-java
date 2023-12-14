@@ -14,6 +14,6 @@ public class colorLabel extends JLabel {
     public void setColor(Color color){
         this.labelColor = color;
     }
-    public Color getButtonColor(){return this.labelColor;}
+    public Color getLabelColor(){return this.labelColor;}
     public int[] getPosition(){return  this.position;}
 }
