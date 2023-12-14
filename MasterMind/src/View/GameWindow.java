@@ -3,11 +3,14 @@ package View;
 import Controller.MasterController;
 import Model.Observer;
 
+import javax.sound.sampled.LineUnavailableException;
+import javax.sound.sampled.UnsupportedAudioFileException;
 import javax.swing.*;
 import javax.swing.border.LineBorder;
 import java.awt.*;
 import java.awt.event.MouseAdapter;
 import java.awt.event.MouseEvent;
+import java.io.IOException;
 import java.nio.channels.Channel;
 
 public class GameWindow extends JFrame implements Observer {
@@ -82,7 +85,17 @@ public class GameWindow extends JFrame implements Observer {
             currentButton.setBorderPainted(false);
             currentButton.setColor(allColors[j]);
             currentButton.addActionListener(actionEvent -> {
-                selectedColor = currentButton.getButtonColor();
+                selectedColor = currentButton.getButtonColor(); // obtient la couleur du bouton
+                SoundMaker snd = new SoundMaker(); // lance un son lorsque le bouton est pressé
+                try {
+                    snd.playClip("sounds/button.wav");
+                } catch (LineUnavailableException e) {
+                    throw new RuntimeException(e);
+                } catch (IOException e) {
+                    throw new RuntimeException(e);
+                } catch (UnsupportedAudioFileException e) {
+                    throw new RuntimeException(e);
+                }
             });
             /*
             currentLabel.addMouseListener(new MouseAdapter() {
