@@ -23,7 +23,6 @@ public class Player {
         Combination combination = new Combination();
         combination.convertCombination(sentCombination);
         setCombination(combination);
-        System.out.println("PLAYER : Combination received");
     }
 
     public void addScore(int score){

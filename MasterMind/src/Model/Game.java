@@ -27,7 +27,6 @@ public class Game {
             currentRound++;
             AttemptLeft = getAttemptAmount();
         }
-        System.out.println("!!! PLAYER ENTERED COMBINATION !!!");
         Round round = roundList.get(currentRound);
         if(round.playRound(this.popPlayerCombination())){ // si round gagné
             this.board.addScore(round.getScore()); // ajoute le score de la manche

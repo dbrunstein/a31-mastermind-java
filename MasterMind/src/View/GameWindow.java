@@ -64,10 +64,9 @@ public class GameWindow extends JFrame implements Observer {
                         System.out.println("Changement couleur");
                         // met à jour l'image
                         int attemptNb = masterController.getAttemptAmount() - finalCurrentLabel.getPosition()[0] -1; // -1 car va de 0 à n
-                        System.out.println(attemptNb);
+                        System.out.println("selected attempt : " + attemptNb +"current attempt : "+currentAttempt);
                         if(selectedColor!=null && attemptNb==currentAttempt){ // s'exécute si c'est la tentative actuelle
                             ImageFactory imageFactory = new ImageFactory();
-                            finalCurrentLabel.setIcon(imageFactory.createImageColorString(selectedColor));
                             finalCurrentLabel.setColor(selectedColor);
                             //updateColor(finalCurrentLabel.getPosition());
                             // debug
@@ -175,6 +174,16 @@ public class GameWindow extends JFrame implements Observer {
         masterController.play(); // joue une manche
         currentAttempt++;
     }
+    public void reset(){ // reset la manche
+        int n = masterController.getAttemptAmount();
+        for(int i=0;i<n;i++){
+            for(int j=0;j<tabCombinationLabels[i].length;j++){
+                tabCombinationLabels[i][j].setColor("PINK");
+            }
+        }
+        this.currentAttempt = -1; // il s'incrémente tt seul jsp pour quoi, donc gardé à -1 pour avoir 0
+    }
+
     @Override
     public void update(int score, int round, int attempt) {
         // Mise à jour du score affiché à chaque notification
@@ -185,6 +194,9 @@ public class GameWindow extends JFrame implements Observer {
         //roundLabel.setText("Round: " + updatedRound);
 
         currentAttempt = attempt;
+
+        reset();
+
         /*liste de choses que la fenetre devra update :
 
         - le nombre de manches restantes
