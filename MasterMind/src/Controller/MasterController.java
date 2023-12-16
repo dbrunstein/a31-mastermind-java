@@ -50,4 +50,9 @@ public class MasterController {
     public void setSettings(Settings settings) {
         board.setSettings(settings);
         System.out.println("test 2");}
+
+    //###################### OTHERS ######################
+    public void play(){
+        this.board.play();
+    }
 }

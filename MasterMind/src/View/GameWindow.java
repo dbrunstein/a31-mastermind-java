@@ -154,7 +154,6 @@ public class GameWindow extends JFrame implements Observer {
         gamePanel.add(playerControl, BorderLayout.SOUTH);
         gamePanel.add(mainPanel,BorderLayout.CENTER);
 
-
         add(gamePanel);
     }
     /*public void selectColor(Model.Color color){
@@ -173,6 +172,8 @@ public class GameWindow extends JFrame implements Observer {
             combination[i] = tabCombinationLabels[n][i].getLabelColor();
         }
         masterController.setPlayerCombination(combination);
+        masterController.play(); // joue une manche
+        currentAttempt++;
     }
     @Override
     public void update(int score, int round, int attempt) {
@@ -180,8 +181,8 @@ public class GameWindow extends JFrame implements Observer {
         int updatedScore = score;//masterController.getScore();
         scoreLabel.setText("Score: " + updatedScore);
 
-        int updatedRound = round;//masterController.getRoundAmount();
-        roundLabel.setText("Round: " + updatedRound);
+        //int updatedRound = round;//masterController.getRoundAmount();
+        //roundLabel.setText("Round: " + updatedRound);
 
         currentAttempt = attempt;
         /*liste de choses que la fenetre devra update :

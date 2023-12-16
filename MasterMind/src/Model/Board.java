@@ -30,8 +30,12 @@ public class Board {
 
     public void startNewGame(){ // start game basique pour l'instant
         this.game = new Game(this);
-        this.game.play();
+        //this.game.play();
         //System.out.println("Score final : " + this.player.getScore()); pas besoin d'afficher le score final pour le moment
+    }
+    public void play(){
+        this.game.play();
+        System.out.println("!!! GAME LAUNCHED !!!");
     }
     //// GET-VALEUR OPTIONS
     public int getScore(){

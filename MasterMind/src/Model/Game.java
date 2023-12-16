@@ -4,13 +4,14 @@ import java.util.ArrayList;
 
 public class Game {
     private ArrayList<Round> roundList;
-
     private Board board;
-
+    private int currentRound;
+    private int AttemptLeft;
     public Game(Board board){
         this.roundList = new ArrayList<Round>();
         this.board = board;
         this.setRoundList();
+        this.currentRound = 0;
     }
     public void setBoard(Board board){
         this.board = board;
@@ -21,9 +22,24 @@ public class Game {
         }
     }
     public void play(){ // joue une partie
+
+        if(AttemptLeft<=0){ // au cas ou ça foire
+            currentRound++;
+            AttemptLeft = getAttemptAmount();
+        }
+        System.out.println("!!! PLAYER ENTERED COMBINATION !!!");
+        Round round = roundList.get(currentRound);
+        if(round.playRound(this.popPlayerCombination())){ // si round gagné
+            this.board.addScore(round.getScore()); // ajoute le score de la manche
+            AttemptLeft = 0;
+        }
+    }
+    /* mode ligne de commande
+    *    public void play(){ // joue une partie
         for(Round round : this.roundList){ // joue chaque manche
             for(int i=0;i<this.getAttemptAmount();i++){
                 while(this.getPlayerCombination()==null){} // attend le submit du joueur (éclaté pour test)
+                System.out.println("!!! PLAYER ENTERED COMBINATION !!!");
                 if(round.playRound(this.popPlayerCombination())){ // si round gagné
                     this.board.addScore(round.getScore()); // ajoute le score de la manche
                     i= this.getAttemptAmount()+1;
@@ -31,6 +47,8 @@ public class Game {
             }
         }
     }
+    * */
+
     //// GET-VALEUR OPTIONS
     public int getRoundAmount(){
         return this.board.getRoundAmount();
