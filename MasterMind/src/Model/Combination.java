@@ -10,7 +10,7 @@ public class Combination {
     }
     public void createCombination(int nbPawn){
         for (int i=0;i<nbPawn;i++){
-            this.pawnList.add(new Pawn());
+            this.pawnList.add(new Pawn(nbPawn));
         }
     }
     private ArrayList<Hint> hintsline;
