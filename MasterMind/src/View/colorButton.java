@@ -5,12 +5,12 @@ import Model.Color;
 import javax.swing.*;
 
 public class colorButton extends JButton {
-    private Color buttonColor;
+    private String buttonColor;
     public colorButton(ImageIcon icon){
         super(icon);
     }
-    public void setColor(Color color){
+    public void setColor(String color){
         this.buttonColor = color;
     }
-    public Color getButtonColor(){return this.buttonColor;}
+    public String getButtonColor(){return this.buttonColor;}
 }

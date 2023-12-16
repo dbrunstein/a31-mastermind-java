@@ -15,7 +15,7 @@ public class GameWindow extends JFrame implements Observer {
     private JLabel scoreLabel; // contient le score
     private colorButton[] tabSelectLabels; // contient les labels de selection du joueur <--- probablement inutile
     private colorLabel[][] tabCombinationLabels; // contient les labels des combinaisons affichées
-    private Model.Color selectedColor;
+    private String selectedColor;
     private JLabel roundLabel;
     private int currentAttempt;
     private MasterController masterController;
@@ -67,7 +67,7 @@ public class GameWindow extends JFrame implements Observer {
                         System.out.println(attemptNb);
                         if(selectedColor!=null && attemptNb==currentAttempt){ // s'exécute si c'est la tentative actuelle
                             ImageFactory imageFactory = new ImageFactory();
-                            finalCurrentLabel.setIcon(imageFactory.createImageColor(selectedColor));
+                            finalCurrentLabel.setIcon(imageFactory.createImageColorString(selectedColor));
                             finalCurrentLabel.setColor(selectedColor);
                             //updateColor(finalCurrentLabel.getPosition());
                             // debug
@@ -82,12 +82,12 @@ public class GameWindow extends JFrame implements Observer {
         }
         JPanel selectPanel = new JPanel(new FlowLayout()); // panel de selection des couleurs (joueur)
 
-        Model.Color[] allColors = masterController.getAllColors(); // obtient toutes les couleurs sous forme de string
+        String[] allColors = masterController.getAllColorsString(); // obtient toutes les couleurs sous forme de string
 
         for(int j=0;j<masterController.getPawnAmount();j++){ // met l'ensemble des couleurs disponible
             //JLabel currentLabel = new JLabel(imageFactory.createImageIcon("img/colors/"+allColors[j]+".png", "color "+allColors[j]));
 
-            colorButton currentButton = new colorButton(imageFactory.createImageIcon("img/colors/"+allColors[j].name()+".png", "color "+allColors[j].name()));
+            colorButton currentButton = new colorButton(imageFactory.createImageIcon("img/colors/"+allColors[j]+".png", "color "+allColors[j]));
             currentButton.setContentAreaFilled(false);
             currentButton.setBorderPainted(false);
             currentButton.setColor(allColors[j]);
@@ -157,9 +157,9 @@ public class GameWindow extends JFrame implements Observer {
 
         add(gamePanel);
     }
-    public void selectColor(Model.Color color){
+    /*public void selectColor(Model.Color color){
         this.selectedColor = color;
-    }
+    }*/
     /* inutile, je croyais que les labels se mettaient pas à jour, car final
     public void updateColor(int[] position){
         tabCombinationLabels[position[0]][position[1]].setColor(selectedColor);
@@ -170,7 +170,7 @@ public class GameWindow extends JFrame implements Observer {
         int n = masterController.getAttemptAmount()-currentAttempt-1;
         for(int i=0;i<tabCombinationLabels[n].length;i++){
             System.out.println(tabCombinationLabels[n][i].getLabelColor());
-            combination[i] = tabCombinationLabels[n][i].getLabelColor().name();
+            combination[i] = tabCombinationLabels[n][i].getLabelColor();
         }
         masterController.setPlayerCombination(combination);
     }

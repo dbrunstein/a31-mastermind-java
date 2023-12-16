@@ -19,19 +19,9 @@ public class Player {
         this.combination = combination;
     }
 
-    public void sendCombination(String[] sentCombination){ // convertit la combinaison de string à combinaison
-        // préférable à migrer vers combination elle même pour limité les relations avec pawn
+    public void sendCombination(String[] sentCombination){
         Combination combination = new Combination();
-        ArrayList<Pawn> pawnArrayList = new ArrayList<Pawn>();
-        Color[] colors = Color.values();
-        for(int i=0;i<sentCombination.length;i++){
-            for(int j=0;j<colors.length;j++){
-                if(sentCombination[i].equals(colors[j].name())){
-                    pawnArrayList.add(new Pawn(colors[j]));
-                }
-            }
-        }
-        combination.setCombination(pawnArrayList);
+        combination.convertCombination(sentCombination);
         setCombination(combination);
     }
 

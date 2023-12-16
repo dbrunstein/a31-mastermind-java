@@ -32,6 +32,19 @@ public class Combination {
             System.out.println(pawn.getPawnColor());
         }
     }
+    public void convertCombination(String[] stringCombination){ // convertit la combinaison de string à combinaison
+        ArrayList<Pawn> pawnArrayList = new ArrayList<Pawn>();
+        Color[] colors = Color.values();
+        for(int i=0;i<stringCombination.length;i++){
+            for(int j=0;j<colors.length;j++){
+                if(stringCombination[i].equals(colors[j].name())){
+                    pawnArrayList.add(new Pawn(colors[j]));
+                }
+            }
+        }
+        this.setCombination(pawnArrayList);
+    }
+
     // test pour les hints, probablement à refaire vu la tronche monstrueuse du truc
     public void testCombination(Combination combination){
         ArrayList<Pawn> combinationList = combination.getCombination();

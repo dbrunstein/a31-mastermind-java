@@ -27,7 +27,9 @@ public class ImageFactory {
     public ImageIcon createImageColor(Color color){
         return createImageIcon("img/colors/"+color.name()+".png","A beautiful color");
     }
-
+    public ImageIcon createImageColorString(String color){
+        return createImageIcon("img/colors/"+color+".png","A beautiful color");
+    }
     public JLabel getLabel(){ // renvoie un label avec l'image contenu dedans
         JLabel label =new JLabel("",createImageIcon(this.filename,"ZIM"),JLabel.CENTER);
         label.setPreferredSize(new Dimension(250, 100));
