@@ -1,5 +1,5 @@
 package Model;
 
 public interface Observer {
-    void update(int score, int round, int attempt);
+    void update(int score, int round, int attempt, Boolean hasWon);
 }

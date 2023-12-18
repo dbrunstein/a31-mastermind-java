@@ -183,9 +183,12 @@ public class GameWindow extends JFrame implements Observer {
         }
         this.currentAttempt = -1; // il s'incrémente tt seul jsp pour quoi, donc gardé à -1 pour avoir 0
     }
-
+    public void victory(int score){
+        EndGameWindow endGameWindow = new EndGameWindow(masterController, score);
+        this.dispose();
+    }
     @Override
-    public void update(int score, int round, int attempt) {
+    public void update(int score, int round, int attempt, Boolean hasWon) {
         // Mise à jour du score affiché à chaque notification
         int updatedScore = score;//masterController.getScore();
         scoreLabel.setText("Score: " + updatedScore);
@@ -196,6 +199,9 @@ public class GameWindow extends JFrame implements Observer {
         currentAttempt = attempt;
 
         reset();
+        if(hasWon){
+            victory(updatedScore);
+        }
 
         /*liste de choses que la fenetre devra update :
 

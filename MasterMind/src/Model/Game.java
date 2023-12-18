@@ -12,6 +12,7 @@ public class Game {
         this.board = board;
         this.setRoundList();
         this.currentRound = 0;
+        AttemptLeft = getAttemptAmount();
     }
     public void setBoard(Board board){
         this.board = board;
@@ -22,16 +23,28 @@ public class Game {
         }
     }
     public void play(){ // joue une partie
+        System.out.println("#### CURRENT ROUND #### :"+currentRound);
+        System.out.println("#### ROUNDLIST SIZE #### :"+roundList.size());
+        if(currentRound<roundList.size()){ //en fonction du nombre de round
+            Round round = roundList.get(currentRound);
+            if(round.playRound(this.popPlayerCombination())){ // si round gagné
+                this.board.addScore(round.getScore()); // ajoute le score de la manche
+                AttemptLeft = 0;
+            }
+            else{
+                AttemptLeft--;
+            }
+            if(AttemptLeft<=0){ // si plus aucune tentative => round suivant
+                currentRound++;
+                AttemptLeft = getAttemptAmount();
+            }
+        }
+        if(currentRound==roundList.size()){ // tt les rounds fini
+            System.out.println("VICTORY");
+            this.board.notifyObs(true);
+            // envoyer l'info à l'observer
+        }
 
-        if(AttemptLeft<=0){ // au cas ou ça foire
-            currentRound++;
-            AttemptLeft = getAttemptAmount();
-        }
-        Round round = roundList.get(currentRound);
-        if(round.playRound(this.popPlayerCombination())){ // si round gagné
-            this.board.addScore(round.getScore()); // ajoute le score de la manche
-            AttemptLeft = 0;
-        }
     }
     /* mode ligne de commande
     *    public void play(){ // joue une partie
