@@ -28,7 +28,7 @@ public class Game {
         if(currentRound<roundList.size()){ //en fonction du nombre de round
             Round round = roundList.get(currentRound);
             if(round.playRound(this.popPlayerCombination())){ // si round gagné
-                this.board.addScore(round.getScore()); // ajoute le score de la manche
+                this.board.addScore(round.getScore(),currentRound+1); // ajoute le score de la manche
                 AttemptLeft = 0;
             }
             else{
@@ -41,7 +41,7 @@ public class Game {
         }
         if(currentRound==roundList.size()){ // tt les rounds fini
             System.out.println("VICTORY");
-            this.board.notifyObs(true);
+            this.board.notifyObs(true,currentRound);
             // envoyer l'info à l'observer
         }
 
@@ -91,7 +91,7 @@ public class Game {
     public Combination popPlayerCombination(){
         return this.board.popPlayerCombination();
     }
-    public void addScore(int score){
-        this.board.addScore(score);
+    public void addScore(int score){ // plus utilisé
+        this.board.addScore(score,1);
     }
 }

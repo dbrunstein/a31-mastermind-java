@@ -37,12 +37,16 @@ public class GameWindow extends JFrame implements Observer {
         tabCombinationLabels = new colorLabel[masterController.getAttemptAmount()][masterController.getCombinationPawnAmount()];
         tabSelectLabels = new colorButton[masterController.getPawnAmount()];
 
-        currentAttempt = 0; // faire un update dessus
+        currentAttempt = 0;
         // Initialisation du panneau de jeu
         JPanel gamePanel = new JPanel(new BorderLayout());
-
+        JPanel scoreAndRound = new JPanel(new FlowLayout());
         scoreLabel = new JLabel("Score: 0", SwingConstants.CENTER);
         gamePanel.add(scoreLabel, BorderLayout.NORTH);
+        roundLabel = new JLabel("Round: 1", SwingConstants.CENTER);
+        scoreAndRound.add(scoreLabel);
+        scoreAndRound.add(roundLabel);
+        gamePanel.add(scoreAndRound, BorderLayout.NORTH);
 
         // Image factory pour créer les images des couleurs
         ImageFactory imageFactory = new ImageFactory();
@@ -192,7 +196,7 @@ public class GameWindow extends JFrame implements Observer {
         // Mise à jour du score affiché à chaque notification
         int updatedScore = score;//masterController.getScore();
         scoreLabel.setText("Score: " + updatedScore);
-
+        roundLabel.setText("Round: "+ (round+1)); // () pour éviter d'append au string
         //int updatedRound = round;//masterController.getRoundAmount();
         //roundLabel.setText("Round: " + updatedRound);
 

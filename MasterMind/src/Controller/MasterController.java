@@ -42,7 +42,7 @@ public class MasterController {
     }
 
     //###################### SETTERS ######################
-    public void addScore(int scoreAdded){ board.addScore(scoreAdded); }
+    public void addScore(int scoreAdded){ board.addScore(scoreAdded,1); } // plus utilisé
     public void setGameWindow(GameWindow gameWindow) {this.gameWindow = gameWindow; }
     public void addObserver(GameWindow gameWindow) { board.addObserver(gameWindow); }
     public void removeObserver(GameWindow gameWindow) { board.removeObserver(gameWindow); }
