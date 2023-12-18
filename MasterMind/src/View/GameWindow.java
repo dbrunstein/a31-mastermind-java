@@ -68,7 +68,7 @@ public class GameWindow extends JFrame implements Observer {
                         System.out.println("Changement couleur");
                         // met à jour l'image
                         int attemptNb = masterController.getAttemptAmount() - finalCurrentLabel.getPosition()[0] -1; // -1 car va de 0 à n
-                        System.out.println("selected attempt : " + attemptNb +"current attempt : "+currentAttempt);
+                        //System.out.println("selected attempt : " + attemptNb +"current attempt : "+currentAttempt);
                         if(selectedColor!=null && attemptNb==currentAttempt){ // s'exécute si c'est la tentative actuelle
                             ImageFactory imageFactory = new ImageFactory();
                             finalCurrentLabel.setColor(selectedColor);
@@ -179,7 +179,9 @@ public class GameWindow extends JFrame implements Observer {
         currentAttempt++;
     }
     public void reset(){ // reset la manche
+
         int n = masterController.getAttemptAmount();
+        //System.out.println("N : " + n + "###################### LENGHT tabCOMB :" +tabCombinationLabels.length);
         for(int i=0;i<n;i++){
             for(int j=0;j<tabCombinationLabels[i].length;j++){
                 tabCombinationLabels[i][j].setColor("PINK");

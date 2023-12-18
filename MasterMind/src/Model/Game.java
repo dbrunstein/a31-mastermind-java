@@ -37,6 +37,7 @@ public class Game {
             if(AttemptLeft<=0){ // si plus aucune tentative => round suivant
                 currentRound++;
                 AttemptLeft = getAttemptAmount();
+                this.board.addScore(0,currentRound); // ajoute le score de la manche
             }
         }
         if(currentRound==roundList.size()){ // tt les rounds fini

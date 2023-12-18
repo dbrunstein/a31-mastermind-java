@@ -11,7 +11,7 @@ public class EndGameWindow extends JFrame implements Observer {
     //JLabel finalScore; // sert à rien
 
     public EndGameWindow(MasterController masterController, int score){
-        super("Victory");
+        super("Game Over");
         this.setResizable(true);
         setSize(700, 700);
         setDefaultCloseOperation(EXIT_ON_CLOSE);
@@ -21,7 +21,9 @@ public class EndGameWindow extends JFrame implements Observer {
 
         JPanel gamePanel = new JPanel(new BorderLayout());
 
-        JLabel victoryLabel = new JLabel("YOU WIN", SwingConstants.CENTER);
+        JPanel centerPanel = new JPanel(new BorderLayout());
+
+        JLabel victoryLabel = new JLabel("GAME OVER", SwingConstants.CENTER);
         gamePanel.add(victoryLabel, BorderLayout.NORTH);
         JLabel scoreLabel = new JLabel("SCORE : "+score, SwingConstants.CENTER);
 
@@ -31,8 +33,13 @@ public class EndGameWindow extends JFrame implements Observer {
             StartWindow startWindow = new StartWindow(masterController);
             this.dispose();
         }); // Ferme la fenêtre
+        ImageFactory imgFact = new ImageFactory();
+        JLabel winLabel = new JLabel(imgFact.createImageIcon("img/misc/zimcolored.gif","Victory gif"));
+
+        centerPanel.add(winLabel,BorderLayout.CENTER);
+        centerPanel.add(scoreLabel, BorderLayout.NORTH);
         gamePanel.add(btnQuit,BorderLayout.SOUTH);
-        gamePanel.add(scoreLabel, BorderLayout.CENTER);
+        gamePanel.add(centerPanel,BorderLayout.CENTER);
         add(gamePanel);
     }
     @Override
