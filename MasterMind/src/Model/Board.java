@@ -23,9 +23,9 @@ public class Board {
     public void removeObserver(Observer observer) {
         observers.remove(observer);
     }
-    private void notifyObservers(Boolean HasEnded, int round) {
+    private void notifyObservers(Boolean hasEnded, int round) {
         for (Observer observer : observers) {
-            observer.update(getScore(), round, getAttemptAmount(), HasEnded); // ou une méthode spécifique d'update selon le besoin
+            observer.update(getScore(), round, getAttemptAmount(), hasEnded); // ou une méthode spécifique d'update selon le besoin
         }
     }
 

@@ -6,13 +6,13 @@ public class Game {
     private ArrayList<Round> roundList;
     private Board board;
     private int currentRound;
-    private int AttemptLeft;
+    private int attemptLeft;
     public Game(Board board){
         this.roundList = new ArrayList<Round>();
         this.board = board;
         this.setRoundList();
         this.currentRound = 0;
-        AttemptLeft = getAttemptAmount();
+        attemptLeft = getAttemptAmount();
     }
     public void setBoard(Board board){
         this.board = board;
@@ -29,15 +29,15 @@ public class Game {
             Round round = roundList.get(currentRound);
             if(round.playRound(this.popPlayerCombination())){ // si round gagné
                 this.board.addScore(round.getScore(),currentRound+1); // ajoute le score de la manche
-                AttemptLeft = 0;
+                attemptLeft = 0;
             }
             else{
-                AttemptLeft--;
+                attemptLeft--;
                 this.board.notifyObsHint(round.getHintList());
             }
-            if(AttemptLeft<=0){ // si plus aucune tentative => round suivant
+            if(attemptLeft <=0){ // si plus aucune tentative => round suivant
                 currentRound++;
-                AttemptLeft = getAttemptAmount();
+                attemptLeft = getAttemptAmount();
                 this.board.addScore(0,currentRound); // ajoute le score de la manche
             }
         }
