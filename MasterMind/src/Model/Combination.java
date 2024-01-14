@@ -54,7 +54,6 @@ public class Combination {
         for(int i=0;i<combinationList.size();i++){
             Pawn pawn = combinationList.get(i);
                 if(this.containsColor(pawn)){ // si la couleur est contenue dedans
-
                     if(this.positionIsKnown(pawn,i)){ // la bonne couleur et position
                         hintList.add(new Hint(HintType.KNOWN_POSITION));
                         System.out.println(" SAME POSITION : PAWN NUMBER : "+i);
@@ -75,7 +74,7 @@ public class Combination {
         int nbRight = 0;
         ArrayList<Pawn> pawnList = combination.getCombination();
         ArrayList<Pawn> pawnListSecret = this.getCombination();
-        for(int i=0;i<pawnList.size();i++){
+        for(int i=0;i<pawnListSecret.size();i++){ // utilise la taille de la combinaison secret pour limiter les bugs
             if(this.comparePawn(pawnList.get(i),pawnListSecret.get(i))){
                 nbRight++;
             }

@@ -28,8 +28,10 @@ public class StartWindow extends JFrame {
         btnNewGame.addActionListener(actionEvent -> {
             // Lance une nouvelle partie
             try {
+                masterController.startNewGame(); // pour que les parametres soient pris en compte (taille combi,...)
                 GameWindow gameWindow = new GameWindow(masterController);
                 masterController.addObserver(gameWindow);
+
             } catch (InterruptedException e) {
                 throw new RuntimeException(e);
             }
