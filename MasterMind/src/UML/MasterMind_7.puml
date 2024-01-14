@@ -1,0 +1,271 @@
+@startuml
+'https://plantuml.com/class-diagram
+skinparam style strictuml
+skinparam classAttributeIconSize 0
+skinparam classFontStyle Bold
+hide enum methods
+hide interface attributes
+
+package MasterMind{
+    class MasterMindApp{
+    }
+        package Controller{
+            class MasterController{
+            }
+        }
+        package Model {
+class Board {
+
+    + <<create>> Board(player: Player)
+    + addObserver(observer: Observer)
+    + removeObserver(observer: Observer)
+    + notifyObservers(hasEnded: Boolean, round: Integer)
+    + startNewGame()
+    + play()
+    + getScore(): Integer
+    + getPlayerName(): String
+    + getRoundAmount(): Integer
+    + getPawnAmount(): Integer
+    + getCombinationPawnAmount(): Integer
+    + getAttemptAmount(): Integer
+    + getDisplayMode(): HintDisplayMode
+    + getPlayerCombination(): Combination
+    + popPlayerCombination(): Combination
+    + setPlayerCombination(combination: String[])
+    + getSettings(): Settings
+    + setSettings(settings: Settings)
+    + setPlayerName(name: String)
+    + resetPlayerScore()
+    + addScore(score: Integer)
+    + notifyObs(hasEnded: Boolean, round: Integer)
+    + notifyObsHint(hintList: ArrayList<String>)
+    + wantToPlay(): Boolean
+}
+
+class Settings {
+    - roundAmount: Integer
+    - pawnAmount: Integer
+    - combinationPawnAmount: Integer
+    - attemptAmount: Integer
+
+    + <<create>> Settings()
+    + setRoundAmount(roundAmount: Integer)
+    + setPawnAmount(pawnAmount: Integer)
+    + setCombinationPawnAmount(combinationPawnAmount: Integer)
+    + setAttemptAmount(attemptAmount: Integer)
+    + getRoundAmount(): Integer
+    + getPawnAmount(): Integer
+    + getCombinationPawnAmount(): Integer
+    + getAttemptAmount(): Integer
+    + getDisplayMode(): HintDisplayMode
+    + setDisplayMode(displayMode: HintDisplayMode)
+}
+
+class Game {
+    - currentRound: Integer
+    - attemptLeft: Integer
+
+    + <<create>> Game(board: Board)
+    + setBoard(board: Board)
+    + setRoundList()
+    + play()
+    + getRoundAmount(): Integer
+    + getPawnAmount(): Integer
+    + getCombinationPawnAmount(): Integer
+    + getAttemptAmount(): Integer
+    + getDisplayMode(): HintDisplayMode
+    + wantToPlay(): Boolean
+    + askCombination()
+    + getPlayerCombination(): Combination
+    + popPlayerCombination()
+    + addScore(score: Integer)
+}
+
+class Round {
+    - localScore: Integer
+    + <<create>> Round(game: Game)
+    + playRound(playerCombination : Combination)
+    + getScore(): Integer
+    + calculateLocalScore()
+    + testCombination(combination: Combination)
+    + hasWon(playerCombination : Combination)): Boolean
+    + displayHints()
+    + won()
+    + getHintList() : ArrayList<String>
+}
+
+class Player {
+    - score: Integer
+    - name: String
+
+    + <<create>> Player()
+    + <<create>> Player(name: String)
+    + setCombination(combination: Combination)
+    + addScore(score: Integer)
+    + popCombination(): Combination
+    + getCombination(): Combination
+    + getScore(): Integer
+    + getName(): String
+    + setName(name: String)
+    + resetScore()
+}
+
+class Combination {
+
+    + <<create>> Combination()
+    + createCombination(nbPawn: Integer)
+    + getSize(): Integer
+    + getCombination(): ArrayList<Pawn>
+    + setCombination(pawnList: ArrayList<Pawn>)
+    + getHintsline(): ArrayList<Hint>
+    + displayCombination()
+    + convertCombination(stringCombination: String[])
+    + testCombination(combination: Combination)
+    + combinationIsEqual(combination: Combination): Boolean
+    + positionIsKnown(pawn: Pawn, index: Integer): Boolean
+    + containsColor(pawn: Pawn): Boolean
+    + comparePawn(pawnOne: Pawn, pawnTwo: Pawn): Boolean
+}
+
+class Hint {
+    + <<create>> Hint()
+    + <<create>> Hint(type: hintType)
+    + setHint(type: hintType)
+    + getHintType(): HintType
+}
+enum HintType {
+    KNOWN_COLOR,
+    KNOWN_POSITION
+}
+class Pawn {
+    + <<create>> Pawn()
+    + setPawnColor(pawnColor: Color)
+    + Pawn(color: Color)
+    + getPawnColor(): Color
+}
+
+enum Color {
+    RED,
+    GREEN,
+    BLUE,
+    YELLOW,
+    ORANGE,
+    BLACK,
+    VIOLET,
+    BROWN
+}
+
+enum HintDisplayMode {
+    EASY,
+    CLASSIC,
+    DIGITAL
+}
+class MasterUtils{
+    + {static}randomColorRange(maxRange: Integer)
+    + {static}randomColor()
+}
+interface Observer {
+    + update(score: Integer,round: Integer,attempt: Integer, hasEnded: Boolean)
+    + updateHints(hints: Arraylist<String>)
+}
+        }
+        package View {
+            class AskNameWindow{
+                + <<create>> AskNameWindow(mastercontroller: MasterController)
+            }
+            class ColorButton{
+                - buttonColor: String
+                + <<create>> ColorButton(icon: ImageIcon)
+                + setColor(color: String)
+                + getButtonColor(): String
+            }
+            class ColorLabel{
+                - labelColor: String
+                - position: Integer[*]
+                + <<create>> ColorLabel(icon: ImageIcon,position:int[*])
+                + setColor(color:String)
+                + getLabelColor(): String
+                + getPosition(): Integer[*]
+
+            }
+            class EndGameWindow{
+                + <<create>> EndGameWindow(masterController: MasterController, score:Integer)
+            }
+            class GameWindow {
+                - selectedColor: String
+                - currentAttempt: Integer
+                + <<create>> GameWindow(mastercontroller: MasterController)
+                + sendCombination()
+                + reset()
+                + endGame(score: Integer)
+                + update(score: Integer,round: Integer,attempt: Integer, hasEnded: Boolean)
+                + updateHints(hints: Arraylist<String>)
+
+            }
+            class ImageFactory{
+                - filename: String
+                + <<create>> ImageFactory()
+                + <<create>> ImageFactory(filename:String)
+                + createImageIcon: ImageIcon
+                + createImageColor(color: Color)
+                + createImageColorString(color: String)
+                + getLabel(): JLabel
+                + getIcon(): Icon
+            }
+            class SettingsWindow{
+                + <<create>> SettingsWindow(mastercontroller: MasterController)
+                - applySettings()
+
+            }
+            class SoundMaker{
+                + <<create>> SoundMaker()
+                + playClip(soundName: String)
+            }
+            class StartWindow{
+                + <<create>> StartWindow(mastercontroller: MasterController)
+            }
+        }
+}
+'####VUES####'
+GameWindow  *--> "1 - masterController" MasterController
+GameWindow ...|> Observer
+'StartWindow ...|> Observer'
+'EndGameWindow ...|> Observer'
+StartWindow ..> GameWindow : <<uses>>
+StartWindow ..> SettingsWindow : <<uses>>
+StartWindow ..> MasterController : <<uses>>
+AskNameWindow ..> MasterController : <<uses>>
+GameWindow *--> " * -tabSelectLabels" ColorButton
+GameWindow *--> " * -tabCombinationLabels" ColorLabel
+GameWindow *--> " * -tabHintLabels" ColorLabel
+GameWindow ..> EndGameWindow : <<uses>>
+EndGameWindow  ..> MasterController : <<uses>>
+GameWindow ..> SoundMaker : <<uses>>
+GameWindow ..> ImageFactory : <<uses>>
+StartWindow ..> SoundMaker : <<uses>>
+
+'####MODEL####'
+Combination  *---> " * -pawnList" Pawn : > possède
+Pawn  *-> "1 - pawnColor"Color : > possède
+Game  *--> "* - roundList:"Round : > est un ensemble de
+Board  o--> "* - observers"Observer : < observe
+Round *--> "1 - secretCombination"Combination : > possède (secret)
+Board  *-> "1 - settings"Settings
+Board  *---> "1 - game" Game : > possède
+Settings  *--> "1 - displayMode:"HintDisplayMode
+Board  *--> "1 - player"Player : > possède information joueur
+Combination  o--> " * - hintsline"Hint : connait
+Hint  *--> "1 - type" HintType
+Combination ...> HintType : <<uses>>
+Round o--> "1 - type" HintType
+MasterController ...> Color : <<uses>>
+Game ...> HintDisplayMode : <<uses>>
+Game  o--> "1 - board" Board
+Player *--> "1 - combination" Combination
+Pawn ..> MasterUtils : <<uses>>
+Round ...> Game : <<uses>>
+'####CONTROLLER####'
+MasterController ...> Board : > manipule
+'####MAIN####'
+MasterMindApp ...> Board : <<uses>>
+@enduml
