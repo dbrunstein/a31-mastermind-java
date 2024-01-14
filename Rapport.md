@@ -15,4 +15,4 @@ Les dépendances superflues ont été réduites, notamment les dépendances inte
 ## Vues
 Des boutons et labels personnalisés ont été conçus afin de pouvoir plus aisément modifier la vue :
 * **ColorButton** : Possède un attribut Color (`String`) permettant de connaître la couleur sélectionnée par le joueur.
-* **ColorLabel** : Possède un attribut Color (`String`) utilisé pour la conception de la combinaison du joueur.
+* **ColorLabel** : Possède un attribut Color (`String`) utilisé pour la conception de la combinaison du joueur et l'affichage des indices.
