@@ -1,0 +1,13 @@
+# Guide d'installation : MasterMind 2077
+
+## Introduction
+Ce guide va vous guidez tout au long de l'installation du jeu
+
+## Installation
+* Téléchargez l'archive au lien suivant : [MasterMind][gamedl]
+* Décompressez l'archive à l'endroit voulu
+## Exécution
+* Exécutez la commande suivante dans le dossier contenant le fichier .jar : ``java -jar a31-mastermind.jar``
+
+[//]: # (Liens)
+[gamedl]: <game.tar>
