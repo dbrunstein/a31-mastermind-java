@@ -31,7 +31,6 @@ public class MasterController {
     public int getAttemptAmount(){ return board.getAttemptAmount(); }
     public HintDisplayMode getDisplayMode(){ return board.getDisplayMode(); }
     public Combination getPlayerCombination(){ return board.getPlayerCombination(); }
-    public Boolean wantToPlay(){ return board.wantToPlay(); }
     public Settings getSettings(){ return board.getSettings(); }
     public String[] getAllColorsString(){
         Color[]colors=Color.values();

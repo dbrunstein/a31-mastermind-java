@@ -32,12 +32,9 @@ public class Board {
     public void startNewGame(){ // start game basique pour l'instant
         this.game = new Game(this);
         this.observers.clear(); // clear les potentiels ancienne gamewindow
-        //this.game.play();
-        //System.out.println("Score final : " + this.player.getScore()); pas besoin d'afficher le score final pour le moment
     }
     public void play(){
         this.game.play();
-        System.out.println("!!! ATTEMPT !!!");
     }
     //// GET-VALEUR OPTIONS
     public int getScore(){
@@ -85,47 +82,9 @@ public class Board {
     public void notifyObs(Boolean hasEnded, int round){ // à revoir
         notifyObservers(hasEnded, round);
     }
-    public void askCombination(){ // demande combination au joueur
-        Scanner myObj = new Scanner(System.in);  // Create a Scanner object
-        Combination playerCombination = new Combination();
-        ArrayList<Pawn> pawnList = new ArrayList<>(); // à grand remplacer par une factory peut-être ?
-        System.out.println("Enter combination : RED, GREEN, BLUE, YELLOW, ORANGE, BLACk, WHITE");
-        for(int i =0;i<this.getCombinationPawnAmount();i++){
-            String response = myObj.nextLine();  // Read user input
-            pawnList.add(new Pawn(this.whatColor(response)));
-        }
-        playerCombination.setCombination(pawnList);
-        this.player.setCombination(playerCombination);
-    }
-    public Color whatColor(String colorString){ // traduction foireuse du string à l'enum
-        Color color = Color.BLACK;              // à migrer vers MasterUtils
-        Color[]colors=Color.values();
-        for(int i=0;i<colors.length;i++){
-            if(colorString.compareTo(colors[i].name())==0){
-                color = colors[i];
-                i = colors.length+1;
-            }
-        }
-        return color;
-    }
-
-    public Boolean wantToPlay(){ // pour le joueur, sera probablement manipulé par le controller plus tard
-        Boolean reply = false;
-        Scanner myObj = new Scanner(System.in);  // Create a Scanner object
-        System.out.println("Wanna play a game? [y/n]");
-
-        String response = myObj.next();  // Read user input
-        if(response.equals("y")){
-            reply = true;
-            System.out.println("OUI");
-        }
-        return reply;
-    }
     public void notifyObsHint(ArrayList<String> hintList){
             for (Observer observer : observers) {
                 observer.updateHints(hintList);
             }
     }
-
-
 }

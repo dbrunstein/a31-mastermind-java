@@ -4,7 +4,6 @@ import java.util.ArrayList;
 
 public class Round {
     private Combination secretCombination;
-    //private int attemptAmount;
     private int localScore;
     private HintDisplayMode displayMode;
 
@@ -25,7 +24,6 @@ public class Round {
             else{
                 System.out.println("WRONG");
                 this.calculateLocalScore();
-                this.displayHints();
             }
         return hasWon;
     }
@@ -50,14 +48,6 @@ public class Round {
     public Boolean hasWon(Combination playerCombination){ // Demande à la combinaison si la combinaison est trouvée
         Boolean hasWon = this.secretCombination.combinationIsEqual(playerCombination);
         return hasWon;
-    }
-    public void displayHints(){ // juste du debug
-        if(this.secretCombination.getHintsline().size()==0){
-            System.out.println("YOU RE SHIT!!!! NO HINTS FOR YOU!!!!");
-        }
-        for(Hint hint : this.secretCombination.getHintsline()){
-            System.out.println("Is color right ?" + hint.getHintType() +"| Is position right ?"+ hint.getHintType());
-        }
     }
     public void won(){
         if(this.displayMode==HintDisplayMode.CLASSIC){

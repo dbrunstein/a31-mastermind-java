@@ -1,6 +1,7 @@
 package View;
 
 import Controller.MasterController;
+import Model.HintDisplayMode;
 import Model.Observer;
 
 import javax.sound.sampled.LineUnavailableException;
@@ -14,15 +15,13 @@ import java.util.ArrayList;
 
 public class GameWindow extends JFrame implements Observer {
     private JLabel scoreLabel; // contient le score
-    private ColorButton[] tabSelectLabels; // contient les labels de selection du joueur <--- probablement inutile
+    private ColorButton[] tabSelectLabels; // contient les labels de selection du joueur
     private ColorLabel[][] tabCombinationLabels; // contient les labels des combinaisons affichées
     private ColorLabel[][] tabHintLabels;
     private String selectedColor;
     private JLabel roundLabel;
     private int currentAttempt;
     private MasterController masterController;
-
-
 
 
     public GameWindow(MasterController masterController) throws InterruptedException {
@@ -69,17 +68,11 @@ public class GameWindow extends JFrame implements Observer {
                 ColorLabel finalCurrentLabel = currentLabel;
                 currentLabel.addMouseListener(new MouseAdapter() {
                     public void mousePressed(MouseEvent me) {
-                        System.out.println("Changement couleur");
                         // met à jour l'image
                         int attemptNb = masterController.getAttemptAmount() - finalCurrentLabel.getPosition()[0] -1; // -1 car va de 0 à n
-                        //System.out.println("selected attempt : " + attemptNb +"current attempt : "+currentAttempt);
                         if(selectedColor!=null && attemptNb==currentAttempt){ // s'exécute si c'est la tentative actuelle
                             ImageFactory imageFactory = new ImageFactory();
                             finalCurrentLabel.setColor(selectedColor);
-                            //updateColor(finalCurrentLabel.getPosition());
-                            // debug
-                            System.out.println(finalCurrentLabel.getLabelColor());
-                            System.out.println(finalCurrentLabel.getPosition()[1]);// affiche la position dans la combi
                         }
                     }
                 });
@@ -103,7 +96,6 @@ public class GameWindow extends JFrame implements Observer {
         String[] allColors = masterController.getAllColorsString(); // obtient toutes les couleurs sous forme de string
 
         for(int j=0;j<masterController.getPawnAmount();j++){ // met l'ensemble des couleurs disponible
-            //JLabel currentLabel = new JLabel(imageFactory.createImageIcon("img/colors/"+allColors[j]+".png", "color "+allColors[j]));
             ColorButton currentButton = new ColorButton(imageFactory.createImageIcon("img/colors/"+allColors[j]+".png", "color "+allColors[j]));
             currentButton.setContentAreaFilled(false);
             currentButton.setBorderPainted(false);
@@ -121,20 +113,9 @@ public class GameWindow extends JFrame implements Observer {
                     throw new RuntimeException(e);
                 }
             });
-            /*
-            currentLabel.addMouseListener(new MouseAdapter() {
-                public void mousePressed(MouseEvent me) {
-                    System.out.println("Changement couleur");
-                    // met à jour l'image
-                    currentLabel.setIcon(imageFactory.createImageIcon("img/colors/PINK.png", "color pink"));
-                    currentLabel.getIcon();// utilise pour mettre dans la case clickable, trouver un moyen d'obtenir la couleur
-                }
-            });
-            */
             tabSelectLabels[j] = currentButton;
             selectPanel.add(tabSelectLabels[j]);
         }
-
         selectPanel.setBackground(Color.lightGray);
         JPanel centerPanel = new JPanel(new GridLayout(1,0));
         centerPanel.add(combinationsPanel);
@@ -142,17 +123,6 @@ public class GameWindow extends JFrame implements Observer {
         mainPanel.add(centerPanel,BorderLayout.CENTER);
 
         mainPanel.add(selectPanel,BorderLayout.SOUTH);
-
-        /*
-        Button btnAddScore = new Button("Add");
-        btnAddScore.addActionListener(actionEvent -> {
-            masterController.addScore(1);
-        });
-
-        gamePanel.add(btnAddScore, BorderLayout.SOUTH);
-
-         */
-
 
         // Partie du controller joueur
         JPanel playerControl = new JPanel(new GridLayout(0,3)); // affichage des combinaisons
@@ -165,6 +135,10 @@ public class GameWindow extends JFrame implements Observer {
             this.dispose();
         }); // Ferme la fenêtre
 
+        btnSkip.addActionListener(actionEvent -> {
+            skip();
+        });
+
         btnSubmit.addActionListener(actionEvent -> {
             sendCombination();
         });
@@ -176,29 +150,37 @@ public class GameWindow extends JFrame implements Observer {
 
         add(gamePanel);
     }
-    /*public void selectColor(Model.Color color){
-        this.selectedColor = color;
-    }*/
-    /* inutile, je croyais que les labels se mettaient pas à jour, car final
-    public void updateColor(int[] position){
-        tabCombinationLabels[position[0]][position[1]].setColor(selectedColor);
-    }*/
     public void sendCombination(){ // envoie la combinaison au board via controller
         String[] combination = new String[tabCombinationLabels[currentAttempt].length];
         // vu que les labels vont de haut en bas, nécessité d'inversé, -1 pour rester dans l'index (0-n)
         int n = masterController.getAttemptAmount()-currentAttempt-1;
         for(int i=0;i<tabCombinationLabels[n].length;i++){
-            System.out.println(tabCombinationLabels[n][i].getLabelColor());
-            combination[i] = tabCombinationLabels[n][i].getLabelColor();
+            if(tabCombinationLabels[n][i].getLabelColor()!= null){
+                combination[i] = tabCombinationLabels[n][i].getLabelColor();
+            }
+            else{
+                break;
+            }
+
+        }
+        masterController.setPlayerCombination(combination);
+        masterController.play(); // joue une manche
+        currentAttempt++;
+    }
+    public void skip(){ // envoie la combinaison au board via controller
+        String[] combination = new String[tabCombinationLabels[currentAttempt].length];
+        // vu que les labels vont de haut en bas, nécessité d'inversé, -1 pour rester dans l'index (0-n)
+        int n = masterController.getAttemptAmount()-currentAttempt-1;
+        for(int i=0;i<tabCombinationLabels[n].length;i++){
+            tabCombinationLabels[n][i].setColor("WHITE");
+            combination[i] = "BEIGE";
         }
         masterController.setPlayerCombination(combination);
         masterController.play(); // joue une manche
         currentAttempt++;
     }
     public void reset(){ // reset la manche
-
         int n = masterController.getAttemptAmount();
-        //System.out.println("N : " + n + "###################### LENGHT tabCOMB :" +tabCombinationLabels.length);
         for(int i=0;i<n;i++){
             for(int j=0;j<tabCombinationLabels[i].length;j++){
                 tabCombinationLabels[i][j].setColor("PINK");
@@ -209,11 +191,10 @@ public class GameWindow extends JFrame implements Observer {
                 tabHintLabels[i][j].setColor("BEIGE");
             }
         }
-        this.currentAttempt = -1; // il s'incrémente tt seul jsp pour quoi, donc gardé à -1 pour avoir 0
+        this.currentAttempt = -1; // il s'incrémente tout seul, donc gardé à -1 pour avoir 0 (à revoir)
     }
     public void endGame(int score){
         EndGameWindow endGameWindow = new EndGameWindow(masterController, score);
-        //masterController.removeObserver(this); engendre des bugs dans engamewindow
         this.dispose();
     }
     @Override
@@ -222,33 +203,42 @@ public class GameWindow extends JFrame implements Observer {
         int updatedScore = score;//masterController.getScore();
         scoreLabel.setText("Score: " + updatedScore);
         roundLabel.setText("Round: "+ (round+1)); // () pour éviter d'append au string
-        //int updatedRound = round;//masterController.getRoundAmount();
-        //roundLabel.setText("Round: " + updatedRound);
-
         currentAttempt = attempt;
-
         reset();
         if(hasEnded){
             endGame(updatedScore);
         }
-
-        /*liste de choses que la fenetre devra update :
-
-        - le nombre de manches restantes
-        - le nombre de pions juste et mal placés
-        - la combinaison secrète mais seulement à la fin
-        - la combinaison du joueur
-
-        puis on verra pour le reste
-         */
     }
 
     @Override
     public void updateHints(ArrayList<String> hints) {
         if(!hints.isEmpty()){
-            for (int i=0;i<hints.size();i++) { // version classique
-                tabHintLabels[tabHintLabels.length-currentAttempt-1][i].setColor(hints.get(i));
+            /*if(masterController.getDisplayMode() == HintDisplayMode.CLASSIC || masterController.getDisplayMode() == HintDisplayMode.DIGITAL){
+                // fait en catastrophe
+                // version classique
+                ArrayList<String> blackTab = new ArrayList<String>();
+                for (int i=0;i<hints.size();i++) { // version classique
+                    if(hints.get(i).equals("BLACK")){
+                        blackTab.add(hints.get(i));
+                    }
+                }
+                for(String i : blackTab){
+                    hints.remove(i);
+                }
+                for (int i=0;i<blackTab.size();i++) {
+                    tabHintLabels[tabHintLabels.length-currentAttempt-1][i].setColor(blackTab.get(i));
+                }
+                for (int i=blackTab.size();i<hints.size()+blackTab.size()-2;i++) {
+                    tabHintLabels[tabHintLabels.length-currentAttempt-1][i].setColor(hints.get(i));
+                }
+
             }
+            else{*/
+                for (int i=0;i<hints.size();i++) { // version facile
+                    tabHintLabels[tabHintLabels.length-currentAttempt-1][i].setColor(hints.get(i));
+                }
+            //}
+
         }
     }
 

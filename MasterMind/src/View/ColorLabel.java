@@ -8,6 +8,7 @@ public class ColorLabel extends JLabel {
     public ColorLabel(ImageIcon icon, int[] position){
         super( icon);
         this.position = position;
+        this.labelColor = "BEIGE";
     }
     public void setColor(String color){
         ImageFactory img = new ImageFactory();

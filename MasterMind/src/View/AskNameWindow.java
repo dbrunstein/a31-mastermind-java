@@ -27,7 +27,6 @@ public class AskNameWindow extends JFrame {
         // Ajouter un écouteur d'événements au bouton
         submitButton.addActionListener(actionEvent -> {
             String playerName = nameField.getText();
-            System.out.println("Player Name: " + playerName);
             masterController.setPlayerName(playerName);
 
             // Fermer la fenêtre après avoir cliqué sur Submit

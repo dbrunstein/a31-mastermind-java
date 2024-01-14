@@ -26,12 +26,6 @@ public class Combination {
     public ArrayList<Hint> getHintsline(){
         return this.hintsline;
     }
-    public void displayCombination(){
-        System.out.println("SEKRIT COMBINATION --- CLASSIFIED VERY SEKRIT --- DO NOT SHARE");
-        for(Pawn pawn : this.pawnList){
-            System.out.println(pawn.getPawnColor());
-        }
-    }
     public void convertCombination(String[] stringCombination){ // convertit la combinaison de string à combinaison
         ArrayList<Pawn> pawnArrayList = new ArrayList<Pawn>();
         Color[] colors = Color.values();
@@ -50,23 +44,18 @@ public class Combination {
         ArrayList<Pawn> combinationList = combination.getCombination();
         ArrayList<Color> alreadyInList = new ArrayList<Color>();
         ArrayList<Hint> hintList = new ArrayList<Hint>();
-
         for(int i=0;i<combinationList.size();i++){
             Pawn pawn = combinationList.get(i);
                 if(this.containsColor(pawn)){ // si la couleur est contenue dedans
                     if(this.positionIsKnown(pawn,i)){ // la bonne couleur et position
                         hintList.add(new Hint(HintType.KNOWN_POSITION));
-                        System.out.println(" SAME POSITION : PAWN NUMBER : "+i);
                     }
                     else{
                         hintList.add(new Hint()); // juste la bonne couleur
-                        System.out.println("SAME COLOR : PAWN NUMBER : "+i);
                     }
                 }
-                System.out.println("TOTAL FAILURE : PAWN NUMBER : "+i);
                 alreadyInList.add(pawn.getPawnColor());
         }
-        this.displayCombination();
         this.hintsline = hintList;
     }
     public Boolean combinationIsEqual(Combination combination){ // si les combinaisons sont égal (même couleur/position)
@@ -103,7 +92,6 @@ public class Combination {
                 i =this.pawnList.size()+1;
             }
         }
-
         return contains;
     }
     // compare la couleur de 2 pions

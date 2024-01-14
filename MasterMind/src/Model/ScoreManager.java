@@ -14,7 +14,6 @@ public class ScoreManager {
         File file = new File(SCORE_FILE);
         if (!file.exists()) {
             try {
-                System.out.println("Creating score file");
                 file.createNewFile();
             } catch (IOException e) {
                 System.out.println("Error creating score file");
@@ -22,7 +21,6 @@ public class ScoreManager {
             }
         }
         else{
-            System.out.println("Score file already exists");
         }
     }
 
