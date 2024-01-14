@@ -61,6 +61,16 @@ class Settings {
     + setDisplayMode(displayMode: HintDisplayMode)
 }
 
+class ScoreManager {
+  - SCORE_FILE: String
+  + ScoreManager()
+  + addScore(playerName: String, score: int): void
+  + getScore(playerName: String): int
+  - readScores(): Map<String, int>
+  - writeScores(scores: Map<String, int>): void
+  + getTopScores(): List<HashMap<String, Integer>>
+}
+
 class Game {
     - currentRound: Integer
     - attemptLeft: Integer
@@ -249,6 +259,7 @@ Combination  *---> " * -pawnList" Pawn : > possède
 Pawn  *-> "1 - pawnColor"Color : > possède
 Game  *--> "* - roundList:"Round : > est un ensemble de
 Board  o--> "* - observers"Observer : < observe
+StartWindow  o--> "* - observers"Observer : < observe
 Round *--> "1 - secretCombination"Combination : > possède (secret)
 Board  *-> "1 - settings"Settings
 Board  *---> "1 - game" Game : > possède
@@ -259,6 +270,7 @@ Hint  *--> "1 - type" HintType
 Combination ...> HintType : <<uses>>
 Round o--> "1 - type" HintType
 MasterController ...> Color : <<uses>>
+MasterController ...> ScoreManager : <<Possède>>
 Game ...> HintDisplayMode : <<uses>>
 Game  o--> "1 - board" Board
 Player *--> "1 - combination" Combination
