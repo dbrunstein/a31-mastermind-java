@@ -41,6 +41,7 @@ public class Board {
     public int getScore(){
         return player.getScore();
     }
+    public String getPlayerName(){return this.player.getName();}
     public int getRoundAmount(){
         return this.settings.getRoundAmount();
     }
@@ -71,7 +72,12 @@ public class Board {
     // SETTERS
     public void setSettings(Settings settings) {
         this.settings = settings;
-        System.out.println("test 1");}
+       }
+    public void setPlayerName(String name){
+        this.player.setName(name);}
+    public void resetPlayerScore(){
+        player.resetScore();
+    }
     // Peut-être changer en fonction fourre-tout pour update les vues ?
     public void addScore(int score, int round){ this.player.addScore(score); notifyObservers(false,round);}
     public void notifyObs(Boolean hasWon, int round){ // à revoir

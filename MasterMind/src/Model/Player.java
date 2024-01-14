@@ -9,11 +9,11 @@ public class Player {
     private String name;
     public Player(){
         this.name = NAME;
-        this.score = 0;
+        resetScore();
     }
     public Player(String name){
         this.name = name;
-        this.score = 0;
+        resetScore();
     }
     public void setCombination(Combination combination){
         this.combination = combination;
@@ -39,4 +39,13 @@ public class Player {
     public int getScore(){
         return this.score;
     }
+    public String getName(){
+        return this.name;
+    }
+    public void setName(String name){
+        this.name = name;
+    }
+
+    public void resetScore(){this.score = 0;
+        System.out.println(score);}
 }

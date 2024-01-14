@@ -49,7 +49,9 @@ public class StartWindow extends JFrame {
 
         // Panneau latéral
         JPanel sidepanel = new JPanel();
-        JLabel score = new JLabel("High score : prout");
+        JLabel playerName = new JLabel("Player : " + masterController.getPlayerName());
+        JLabel score = new JLabel("High score : " + masterController.getScore());
+        sidepanel.add(playerName);
         sidepanel.add(score);
         sidepanel.setLayout(new BoxLayout(sidepanel, BoxLayout.PAGE_AXIS));
         ImageFactory imageFactory = new ImageFactory();

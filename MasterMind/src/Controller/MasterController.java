@@ -2,8 +2,6 @@ package Controller;
 import Model.*;
 import View.*;
 
-import javax.swing.*;
-
 
 public class MasterController {
 
@@ -21,6 +19,7 @@ public class MasterController {
 
     //###################### GETTERS ######################
     public int getScore() { return board.getScore(); }
+    public String getPlayerName(){ return board.getPlayerName(); }
     public int getRoundAmount(){ return board.getRoundAmount(); }
     public int getPawnAmount(){ return board.getPawnAmount(); }
     public int getCombinationPawnAmount(){ return board.getCombinationPawnAmount(); }
@@ -49,7 +48,12 @@ public class MasterController {
     public void setPlayerCombination(String[] combination){this.board.setPlayerCombination(combination);}
     public void setSettings(Settings settings) {
         board.setSettings(settings);
-        System.out.println("test 2");}
+    }
+    public void setPlayerName(String name){
+        board.setPlayerName(name);
+    }
+
+    public void resetPlayerScore(){board.resetPlayerScore();}
 
     //###################### OTHERS ######################
     public void play(){
