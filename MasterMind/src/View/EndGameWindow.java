@@ -114,6 +114,7 @@ public class EndGameWindow extends JFrame {
         btnRestart.addActionListener(actionEvent -> {
             masterController.resetPlayerScore();
             StartWindow startWindow = new StartWindow(masterController);
+            masterController.startNewGame(); // reset la partie
             this.dispose();
         });
 

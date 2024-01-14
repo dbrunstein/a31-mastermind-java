@@ -191,6 +191,7 @@ public class GameWindow extends JFrame implements Observer {
     }
     public void victory(int score){
         EndGameWindow endGameWindow = new EndGameWindow(masterController, score);
+        //masterController.removeObserver(this); engendre des bugs dans engamewindow
         this.dispose();
     }
     @Override

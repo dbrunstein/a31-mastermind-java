@@ -14,6 +14,7 @@ public class Board {
         this.player = player;
         this.observers = new ArrayList<>();
         this.settings = new Settings(); // settings par défaut
+        startNewGame();
     }
 
     public void addObserver(Observer observer) {
@@ -30,6 +31,7 @@ public class Board {
 
     public void startNewGame(){ // start game basique pour l'instant
         this.game = new Game(this);
+        this.observers.clear(); // clear les potentiels ancienne gamewindow
         //this.game.play();
         //System.out.println("Score final : " + this.player.getScore()); pas besoin d'afficher le score final pour le moment
     }
