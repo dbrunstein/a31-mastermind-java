@@ -2,41 +2,17 @@
 
 ## Introduction
 
-Ce rapport présente le projet "MasterMind 2077" réalisé dans le cadre du BUT2. Le projet vise à implémenter le célèbre jeu de société MasterMind en utilisant le modèle de conception MVC (Modèle-Vue-Contrôleur) et en intégrant les différents designs pattern ainsi que les compétences acquises au cour de la formation en a31.
+Ce deuxième rapport présente les avancées effectuées sur le projet "MasterMind 2077", réalisé dans le cadre du BUT2.
 
-## Modèle de Conception : Modèle-Vue-Contrôleur (MVC)
+## Dépendances
+Les dépendances superflues ont été réduites, notamment les dépendances inter-classes (a possède b, b possède a).
+- **Game/Round** : Utilisation de Game dans le constructeur de Round pour transmettre les paramètres.
+- **GameWindow** : Abandon de l'utilisation de l'attribut Color au profit de String afin de n'avoir aucune dépendance au modèle.
 
-Pour le MVC qu'il nous a été demandé de mettre en place, nous avons découpé la vue, le modèle, et les contrôleur de manière suivante :
+## Observateurs
+`GameWindow` devient le seul observateur du projet, puisqu'aucune autre vue n'utilise activement les données du modèle.
 
-- **Modèle** : La classe `Board` a été désignée comme le modèle principal, englobant les règles du jeu, la gestion du score, et les interactions avec le joueur. Cette classe est responsable de l'état du jeu.
-
-- **Vue** : Les classes `StartWindow` et `GameWindow` ont été utilisées comme vues pour présenter différentes interfaces graphiques. `StartWindow` gère le lancement de nouvelles parties, tandis que `GameWindow` représente l'interface de jeu en cours.
-
-- **Contrôleur** : La classe `MasterController` agit comme le contrôleur principal, connectant le modèle et la vue. Elle interprète les actions de l'utilisateur et déclenche les mises à jour nécessaires dans le modèle et la vue.
-
-## Design Pattern Observer
-
-Le pattern Observer a été implémenté pour permettre aux différentes parties du programme d'être informées des changements dynamiques du modèle sans dépendre directement de celui-ci.
-
-- **Observateurs** : Les classes `StartWindow` et `GameWindow` ont été configurées en tant qu'observateurs du modèle (`Board`). Elles sont informées des changements dans le modèle et peuvent mettre à jour leurs interfaces en conséquence. Cependant la classe `EndWindow`sera plus tard également implémentée comme observateur de la board car nous n'avons pas eu le temps d'y toucher.
-
-- **Observable** : La classe `Board` a été conçue pour être observable, permettant l'ajout, la suppression et la notification d'observateurs. Ainsi, lorsqu'un événement important se produit dans le jeu, tous les observateurs enregistrés sont notifiés.
-
-## Connexion des Classes
-
-La classe `MasterController` agit comme le lien central entre les différentes parties du projet. Elle crée les instances de `Board`, `StartWindow`, et `GameWindow`, configure les relations entre les classes et assure la cohérence du système.
-
-Les interfaces graphiques (`StartWindow` et `GameWindow`) sont mises à jour dynamiquement grâce à la communication entre le contrôleur et le modèle à travers le pattern Observer. Lorsque le modèle change, les vues sont notifiées et actualisent leurs affichages en conséquence.
-
-## Traitement des combinaison
-
-La class `Combination` permet à la fois de créer une combinaison aléatoire et d'enregistrer celle du joueur.
-Le traitement des combinaison est effectué par la fonction **testCombination** directement sur la combinaison secrète
-afin que la valeur des pions ne soit connue que par sa propre combinaison ou la combinaison testé. 
-
-## Valeur des pions et indices
-
-Les pions `Pawn` utilise une enumération `Color` afin de cantonner leur couleur à celles connues par le model.
-
-Les indices utilise aussi une énumération `HintType`, étant alors soit KNOWN_COLOR (Seul la couleur est connue), 
-ou KNOWN_POSITION (La couleur et la position est connue) afin de simplifier le model.
+## Vues
+Des boutons et labels personnalisés ont été conçus afin de pouvoir plus aisément modifier la vue :
+* **ColorButton** : Possède un attribut Color (`String`) permettant de connaître la couleur sélectionnée par le joueur.
+* **ColorLabel** : Possède un attribut Color (`String`) utilisé pour la conception de la combinaison du joueur.
