@@ -10,11 +10,13 @@ import java.awt.*;
 import java.awt.event.MouseAdapter;
 import java.awt.event.MouseEvent;
 import java.io.IOException;
+import java.util.ArrayList;
 
 public class GameWindow extends JFrame implements Observer {
     private JLabel scoreLabel; // contient le score
-    private colorButton[] tabSelectLabels; // contient les labels de selection du joueur <--- probablement inutile
-    private colorLabel[][] tabCombinationLabels; // contient les labels des combinaisons affichées
+    private ColorButton[] tabSelectLabels; // contient les labels de selection du joueur <--- probablement inutile
+    private ColorLabel[][] tabCombinationLabels; // contient les labels des combinaisons affichées
+    private ColorLabel[][] tabHintLabels;
     private String selectedColor;
     private JLabel roundLabel;
     private int currentAttempt;
@@ -33,9 +35,10 @@ public class GameWindow extends JFrame implements Observer {
         this.masterController = masterController;
         masterController.setGameWindow(this);
 
-        // nombre de tentatives + taille de la combinaison
-        tabCombinationLabels = new colorLabel[masterController.getAttemptAmount()][masterController.getCombinationPawnAmount()];
-        tabSelectLabels = new colorButton[masterController.getPawnAmount()];
+        // tableaux des labels affichés
+        tabCombinationLabels = new ColorLabel[masterController.getAttemptAmount()][masterController.getCombinationPawnAmount()];
+        tabHintLabels = new ColorLabel[masterController.getAttemptAmount()][masterController.getCombinationPawnAmount()];
+        tabSelectLabels = new ColorButton[masterController.getPawnAmount()];
 
         currentAttempt = 0;
         // Initialisation du panneau de jeu
@@ -52,17 +55,16 @@ public class GameWindow extends JFrame implements Observer {
         ImageFactory imageFactory = new ImageFactory();
 
         // panels contenant les labels des combinaisons et de selection
-        JPanel mainPanel = new JPanel(new BorderLayout()); // contient affichage et selection
+        JPanel mainPanel = new JPanel(new BorderLayout()); // contient affichage, indices et selection
         JPanel combinationsPanel = new JPanel(new GridLayout(0,1)); // affichage des combinaisons
-
         for(int i=0;i<masterController.getAttemptAmount();i++){ // affichage des combinaisons
             JPanel colorPanel = new JPanel(new FlowLayout()); // une combinaison
 
             for(int j=0;j<masterController.getCombinationPawnAmount();j++){ // met les combinaisons "à zéro"
                 int[] position = {i,j};// i attempt, j position dans la combinaison
-                tabCombinationLabels[i][j] = new colorLabel(imageFactory.createImageIcon("img/colors/PINK.png", "color pink"),position);
-                colorLabel currentLabel = tabCombinationLabels[i][j];
-                colorLabel finalCurrentLabel = currentLabel;
+                tabCombinationLabels[i][j] = new ColorLabel(imageFactory.createImageIcon("img/colors/PINK.png", "color pink"),position);
+                ColorLabel currentLabel = tabCombinationLabels[i][j];
+                ColorLabel finalCurrentLabel = currentLabel;
                 currentLabel.addMouseListener(new MouseAdapter() {
                     public void mousePressed(MouseEvent me) {
                         System.out.println("Changement couleur");
@@ -83,14 +85,24 @@ public class GameWindow extends JFrame implements Observer {
             }
             combinationsPanel.add(colorPanel);
         }
+        JPanel hintPanel = new JPanel(new GridLayout(0,1)); // affichage des indices
+        for(int i=0;i<masterController.getAttemptAmount();i++){
+            JPanel hintLine = new JPanel(new FlowLayout()); // une ligne d'indice
+            for(int j=0;j<masterController.getCombinationPawnAmount();j++){ // met les indices "à zéro"
+                int[] position = {i,j};
+                tabHintLabels[i][j] = new ColorLabel(imageFactory.createImageIcon("img/colors/BEIGE.png", "color white"),position);
+                hintLine.add(tabHintLabels[i][j]);
+            }
+            hintPanel.add(hintLine);
+        }
+
         JPanel selectPanel = new JPanel(new FlowLayout()); // panel de selection des couleurs (joueur)
 
         String[] allColors = masterController.getAllColorsString(); // obtient toutes les couleurs sous forme de string
 
         for(int j=0;j<masterController.getPawnAmount();j++){ // met l'ensemble des couleurs disponible
             //JLabel currentLabel = new JLabel(imageFactory.createImageIcon("img/colors/"+allColors[j]+".png", "color "+allColors[j]));
-
-            colorButton currentButton = new colorButton(imageFactory.createImageIcon("img/colors/"+allColors[j]+".png", "color "+allColors[j]));
+            ColorButton currentButton = new ColorButton(imageFactory.createImageIcon("img/colors/"+allColors[j]+".png", "color "+allColors[j]));
             currentButton.setContentAreaFilled(false);
             currentButton.setBorderPainted(false);
             currentButton.setColor(allColors[j]);
@@ -122,8 +134,11 @@ public class GameWindow extends JFrame implements Observer {
         }
 
         selectPanel.setBackground(Color.lightGray);
+        JPanel centerPanel = new JPanel(new GridLayout(1,0));
+        centerPanel.add(combinationsPanel);
+        centerPanel.add(hintPanel);
+        mainPanel.add(centerPanel,BorderLayout.CENTER);
 
-        mainPanel.add(combinationsPanel,BorderLayout.CENTER);
         mainPanel.add(selectPanel,BorderLayout.SOUTH);
 
         /*
@@ -187,15 +202,20 @@ public class GameWindow extends JFrame implements Observer {
                 tabCombinationLabels[i][j].setColor("PINK");
             }
         }
+        for(int i=0;i<n;i++){
+            for(int j=0;j<tabHintLabels[i].length;j++){
+                tabHintLabels[i][j].setColor("BEIGE");
+            }
+        }
         this.currentAttempt = -1; // il s'incrémente tt seul jsp pour quoi, donc gardé à -1 pour avoir 0
     }
-    public void victory(int score){
+    public void endGame(int score){
         EndGameWindow endGameWindow = new EndGameWindow(masterController, score);
         //masterController.removeObserver(this); engendre des bugs dans engamewindow
         this.dispose();
     }
     @Override
-    public void update(int score, int round, int attempt, Boolean hasWon) {
+    public void update(int score, int round, int attempt, Boolean hasEnded) {
         // Mise à jour du score affiché à chaque notification
         int updatedScore = score;//masterController.getScore();
         scoreLabel.setText("Score: " + updatedScore);
@@ -206,8 +226,8 @@ public class GameWindow extends JFrame implements Observer {
         currentAttempt = attempt;
 
         reset();
-        if(hasWon){
-            victory(updatedScore);
+        if(hasEnded){
+            endGame(updatedScore);
         }
 
         /*liste de choses que la fenetre devra update :
@@ -219,5 +239,14 @@ public class GameWindow extends JFrame implements Observer {
 
         puis on verra pour le reste
          */
+    }
+
+    @Override
+    public void updateHints(ArrayList<String> hints) {
+        if(!hints.isEmpty()){
+            for (int i=0;i<hints.size();i++) { // version classique
+                tabHintLabels[tabHintLabels.length-currentAttempt-1][i].setColor(hints.get(i));
+            }
+        }
     }
 }

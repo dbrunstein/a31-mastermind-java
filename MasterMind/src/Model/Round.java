@@ -66,4 +66,16 @@ public class Round {
         System.out.println("You have won this round!!!! :DDDDDDD");
         System.out.println("This round Score : "+this.localScore);
     }
+    public ArrayList<String> getHintList(){
+        ArrayList<String> StringHintList = new ArrayList<String>();
+        for(Hint hint : this.secretCombination.getHintsline()){
+            if(hint.getHintType()==HintType.KNOWN_POSITION){ // bien placé
+                StringHintList.add("BLACK");
+            }
+            else{ // mal placé
+                StringHintList.add("WHITE");
+            }
+        }
+        return StringHintList;
+    }
 }

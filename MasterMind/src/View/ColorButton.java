@@ -1,12 +1,10 @@
 package View;
 
-import Model.Color;
-
 import javax.swing.*;
 
-public class colorButton extends JButton {
+public class ColorButton extends JButton {
     private String buttonColor;
-    public colorButton(ImageIcon icon){
+    public ColorButton(ImageIcon icon){
         super(icon);
     }
     public void setColor(String color){

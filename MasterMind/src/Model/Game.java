@@ -33,6 +33,7 @@ public class Game {
             }
             else{
                 AttemptLeft--;
+                this.board.notifyObsHint(round.getHintList());
             }
             if(AttemptLeft<=0){ // si plus aucune tentative => round suivant
                 currentRound++;
@@ -41,11 +42,10 @@ public class Game {
             }
         }
         if(currentRound==roundList.size()){ // tt les rounds fini
-            System.out.println("VICTORY");
+            System.out.println("END");
             this.board.notifyObs(true,currentRound);
             // envoyer l'info à l'observer
         }
-
     }
     /* mode ligne de commande
     *    public void play(){ // joue une partie

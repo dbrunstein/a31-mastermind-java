@@ -23,9 +23,9 @@ public class Board {
     public void removeObserver(Observer observer) {
         observers.remove(observer);
     }
-    private void notifyObservers(Boolean hasWon, int round) {
+    private void notifyObservers(Boolean HasEnded, int round) {
         for (Observer observer : observers) {
-            observer.update(getScore(), round, getAttemptAmount(), hasWon); // ou une méthode spécifique d'update selon le besoin
+            observer.update(getScore(), round, getAttemptAmount(), HasEnded); // ou une méthode spécifique d'update selon le besoin
         }
     }
 
@@ -82,8 +82,8 @@ public class Board {
     }
     // Peut-être changer en fonction fourre-tout pour update les vues ?
     public void addScore(int score, int round){ this.player.addScore(score); notifyObservers(false,round);}
-    public void notifyObs(Boolean hasWon, int round){ // à revoir
-        notifyObservers(hasWon, round);
+    public void notifyObs(Boolean hasEnded, int round){ // à revoir
+        notifyObservers(hasEnded, round);
     }
     public void askCombination(){ // demande combination au joueur
         Scanner myObj = new Scanner(System.in);  // Create a Scanner object
@@ -121,7 +121,11 @@ public class Board {
         }
         return reply;
     }
-
+    public void notifyObsHint(ArrayList<String> hintList){
+            for (Observer observer : observers) {
+                observer.updateHints(hintList);
+            }
+    }
 
 
 }
