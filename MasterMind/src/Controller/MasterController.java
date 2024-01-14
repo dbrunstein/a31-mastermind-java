@@ -2,15 +2,20 @@ package Controller;
 import Model.*;
 import View.*;
 
+import java.util.HashMap;
+import java.util.List;
+
 
 public class MasterController {
 
     Board board;
     GameWindow gameWindow;
+    public ScoreManager scoreManager = new ScoreManager();
 
-
+    public List<HashMap<String, Integer>> scores = ScoreManager.getTopScores();
     public MasterController(Board board) {
         this.board = board;
+        System.out.println(scores.size());
     }
 
     public void startNewGame(){

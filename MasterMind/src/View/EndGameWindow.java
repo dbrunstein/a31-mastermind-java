@@ -50,6 +50,7 @@ public class EndGameWindow extends JFrame implements Observer {
 package View;
 
 import Controller.MasterController;
+import Model.ScoreManager;
 
 import javax.swing.*;
 import java.awt.*;
@@ -130,6 +131,9 @@ public class EndGameWindow extends JFrame {
 
         // Rendre la fenêtre visible
         this.setVisible(true);
+
+        ScoreManager.addScore(playerName, score);
+        masterController.resetPlayerScore();
     }
 }
 

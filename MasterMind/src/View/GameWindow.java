@@ -23,6 +23,8 @@ public class GameWindow extends JFrame implements Observer {
     private MasterController masterController;
 
 
+
+
     public GameWindow(MasterController masterController) throws InterruptedException {
         // Initialisation de la fenêtre
         super("MasterMind 2077");
@@ -248,5 +250,10 @@ public class GameWindow extends JFrame implements Observer {
                 tabHintLabels[tabHintLabels.length-currentAttempt-1][i].setColor(hints.get(i));
             }
         }
+    }
+
+    @Override
+    public void updateScores(MasterController masterController) {
+
     }
 }

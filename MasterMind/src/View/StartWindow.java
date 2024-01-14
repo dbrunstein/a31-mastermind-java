@@ -1,11 +1,17 @@
 package View;
 
 import Controller.MasterController;
+import Model.ScoreManager;
 
 import javax.swing.*;
 import java.awt.*;
+import java.util.HashMap;
+import java.util.List;
 
 public class StartWindow extends JFrame {
+
+    // Panneau latéral
+    JPanel sidepanel = new JPanel();
 
     public StartWindow(MasterController masterController){
         // Création de la fenêtre principale
@@ -26,6 +32,7 @@ public class StartWindow extends JFrame {
         });
 
         btnNewGame.addActionListener(actionEvent -> {
+
             // Lance une nouvelle partie
             try {
                 masterController.startNewGame(); // pour que les parametres soient pris en compte (taille combi,...)
@@ -49,12 +56,11 @@ public class StartWindow extends JFrame {
         btnPanel.add(btnSettings);
         btnPanel.add(btnQuit);
 
-        // Panneau latéral
-        JPanel sidepanel = new JPanel();
-        JLabel playerName = new JLabel("Player : " + masterController.getPlayerName());
-        JLabel score = new JLabel("High score : " + masterController.getScore());
-        sidepanel.add(playerName);
+        //JLabel playerName = new JLabel("Player : " + masterController.getPlayerName());
+        JLabel score = new JLabel("High scores : ");
         sidepanel.add(score);
+        updateScores(masterController);
+
         sidepanel.setLayout(new BoxLayout(sidepanel, BoxLayout.PAGE_AXIS));
         ImageFactory imageFactory = new ImageFactory();
         JLabel image = new JLabel(imageFactory.createImageIcon("img/zatus3.gif", "ZIM"));
@@ -74,5 +80,26 @@ public class StartWindow extends JFrame {
             SettingsWindow settingsWindow = new SettingsWindow(masterController);
         });
     }
+
+    public void updateScores(MasterController masterController){
+        List<HashMap<String, Integer>> scoresList = masterController.scores;
+        if (!scoresList.isEmpty()) {
+            // Parcourez la liste des scores
+            for (HashMap<String, Integer> score : scoresList) {
+                // Obtenez le pseudo et le score du joueur
+                String playerName = score.keySet().iterator().next();
+                int playerScore = score.get(playerName);
+
+                // Affichez le pseudo et le score
+                JLabel player = new JLabel(playerName + ": " + playerScore);
+                sidepanel.add(player);
+            }
+        } else {
+            System.out.println("Aucun score disponible.");
+        }
+
+    }
+
+
 
 }
