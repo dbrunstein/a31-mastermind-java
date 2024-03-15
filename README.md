@@ -11,7 +11,7 @@ Mastermind
 
 
 ## Installation
-Suivre le manuel d'installation : [ici][INSTALL.md]
+Suivre le manuel d'installation : [ici][install]
 
 
 
@@ -146,3 +146,6 @@ Le rendu est à faire sur votre dépôt Git **sur une branche nommé `rendu2`**.
 - Vos diagrammes UML doivent être au format PlantUML et svg,
 - À la fin du projet, votre dépôt devra contenir au minimum une branche `rendu1` et une branche `rendu2`, ce seront les seules branches évaluées. Vous êtes libre de gérer le reste de votre dépôt comme vous le souhaitez.
 - Pensez à vérifier que votre exécutable fonctionne sur Linux, Windows et Mac.
+
+
+[install]: <INSTALL.md>
