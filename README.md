@@ -4,18 +4,12 @@ Mastermind
 ![](mastermind.jpg)
 
 ## Description
-
-
-
+*Mastermind* est un jeu développé sous Java utilisant swing.
 
 
 
 ## Installation
 Suivre le manuel d'installation : [ici][install]
-
-
-
-
 
 
 
