@@ -11,7 +11,7 @@ Mastermind
 
 
 ## Installation
-
+Suivre le manuel d'installation : [ici][INSTALL.md]
 
 
 
